@@ -3,9 +3,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
+<<<<<<< HEAD
 import  Home  from "./pages/homeuser.jsx";
 
 import { Demo } from "./pages/demo";
+=======
+import { Home } from "./pages/home";
+import { Registration } from "./pages/registration.jsx";
+>>>>>>> registro
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -31,7 +36,8 @@ const Layout = () => {
                         <Route element={<Landing />} path="/buenvecino" /> 
                         <Route element={<Home />} path="/" />
                         <Route element={<HomeAdmin />} path="/adminhome" />
-                        <Route element={<Demo />} path="/demo" />
+                        
+                        <Route element={<Registration />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

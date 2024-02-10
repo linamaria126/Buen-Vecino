@@ -1,6 +1,14 @@
-.body{
+/*
+body{
     font-family: Inter;
 }
 
+*/
 
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
 
+body{
+    font-family: 'Montserrat', sans-serif;
+}
