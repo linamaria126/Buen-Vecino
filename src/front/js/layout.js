@@ -2,21 +2,13 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
-<<<<<<< HEAD
-import  Home  from "./pages/homeuser.jsx";
-
-import { Demo } from "./pages/demo";
-=======
-import { Home } from "./pages/home";
-import { Registration } from "./pages/registration.jsx";
->>>>>>> registro
+import { Registration } from "./pages/Registration.jsx";
+import { Home } from "./pages/Home.jsx";
 import { Single } from "./pages/single";
+import  Homeadmin  from "./pages/Homeadmin.jsx";
 import injectContext from "./store/appContext";
-
-
 import  Footer  from "./component/footer.jsx";
-import Landing from "./pages/landing.jsx";
+
 
 //create your first component
 const Layout = () => {
@@ -30,14 +22,11 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                  
-                    <Routes>
-                       
-                        <Route element={<Landing />} path="/buenvecino" /> 
+                  <Routes>
+                                       
                         <Route element={<Home />} path="/" />
-                        <Route element={<HomeAdmin />} path="/adminhome" />
-                        
-                        <Route element={<Registration />} path="/demo" />
+                        <Route element={<Homeadmin />} path="/homeadmin" />
+                        <Route element={<Registration />} path="/registration" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
