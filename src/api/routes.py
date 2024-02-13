@@ -28,7 +28,7 @@ def get_info():
         "msg": "de aqui deberias poder acceder a toda la informacion"
     }
 
-@api.route('/apartment/<int:id>', methods=['GET'])
+@api.route('/apartment', methods=['GET'])
 def get_apto_info():
     return{
         "msg": "aqui encuentras la informacion por apartamento"

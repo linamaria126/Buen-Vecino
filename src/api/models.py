@@ -23,19 +23,18 @@ class User(db.Model):
 class Unidad_residencial(db.Model):
     __tablename__ = "unidad_residencial"
     id = db.Column(db.Integer, primary_key=True)
-    UR_name = db.Column(db.String(200), nullable = False)
+    name = db.Column(db.String(200), nullable = False)
     nit = db.Column(db.String(100), nullable = False)
     address = db.Column(db.String(100), nullable = False)
     phone = db.Column(db.String(30), nullable = False)
     num_apto = db.Column(db.Integer, nullable = False)
-    # esta linea esta esperando una mapper argument
-    apartamento = db.relationship('apartamento')
-    residentes = db.relationship('residentes')
+    apartamento = db.relationship('Apartamento', backref='unidad_residencial')
+    residentes = db.relationship('Residentes', backref='unidad_residencial')
 
     def serialize(self):
         return{
             "id": self.id,
-            "UR_name": self.UR_name,
+            "name": self.name,
             "nit": self.nit,
             "address": self.address,
             "phone": self.phone,
@@ -55,9 +54,10 @@ class Residentes(db.Model):
     password = db.Column(db.String(500), nullable = False)
     email = db.Column(db.String(100), nullable = False)
     is_active = db.Column(db.Boolean, nullable = False)
-    # unidad_residencial_id = db.Column(db.Integer, ForeignKey('unidad_residencial.id'))
+    reservas = db.relationship('Reservas', backref='residentes')
+    unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
-    publicaciones = db.relationship('publicaciones')
+    publicaciones = db.relationship('Publicaciones', backref='residentes')
 
 
     def serialize(self):
@@ -82,8 +82,12 @@ class Apartamento(db.Model):
     torre = db.Column(db.Integer, nullable = False)
     num_apto = db.Column(db.Integer, nullable = False)
     num_habitantes = db.Column(db.Integer, nullable = False)
-    residente_id = db.Column(db.Integer, ForeignKey('residentes.id'), nullable = False)
-    UR_id = db.Column(db.Integer, ForeignKey('unidad_residencial.id'))
+    residentes = db.relationship('Residentes', backref='apartamento')
+    # linea de abajo no tocar 
+    # residentes_id = db.Column(db.Integer, db.ForeignKey('residentes.id'), nullable = False)
+    unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
+    vehiculos = db.relationship('Vehiculos', backref='apartamento')
+    mascotas = db.relationship('Mascotas', backref='apartamento')
 
 
     def serialize(self):
@@ -92,19 +96,20 @@ class Apartamento(db.Model):
             "torre": self.torre,
             "num_apto": self.num_apto,
             "num_habitantes": self.num_habitantes,
-            "residente_id": self.residente_id,
+            "residentes_id": self.residentes_id,
             "UR_id": self.UR_id
         }
     
 
-class Vehiulos(db.Model):
+class Vehiculos(db.Model):
     __tablename__ = 'vehiculos'
     id = db.Column(db.Integer, primary_key = True)
     placa = db.Column(db.String(10), nullable = False)
     marca = db.Column(db.String(50), nullable = False)
     modelo = db.Column(db.Integer, nullable = False)
     color = db.Column(db.String(15), nullable = False)
-    apartamento_id = db.Column(db.Integer, ForeignKey('apartamento.id'))
+
+    apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
 
 
     def serialize(self):
@@ -124,7 +129,8 @@ class Mascotas(db.Model):
     tipo = db.Column(db.String(50), nullable = False)
     raza = db.Column(db.String(50), nullable = False)
     nombre = db.Column(db.String(100), nullable = False)
-    apartamento_id = db.Column(db.Integer, ForeignKey('apartamento.id'))
+
+    apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
 
     def serialize(self):
         return{
@@ -142,14 +148,15 @@ class Reservas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hora_inicio = db.Column(db.DateTime, nullable= False)
     hora_final = db.Column(db.DateTime, nullable = False)
-    apartamento_id = db.Column(db.Integer, ForeignKey('apartamento.id'))
+
+    residentes_id = db.Column(db.Integer, db.ForeignKey('residentes.id'))
 
     def serialize(self):
         return{
             "id": self.id,
             "hora_inicio": self.hora_inicio,
             "hora_final": self.hora_final,
-            "apartamento_id": self.apartamento_id
+            "residentes": self.residentes
         }
     
 
@@ -159,7 +166,8 @@ class Publicaciones(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     contenido = db.Column(db.String(500), nullable = False)
     hora_publicacion = db.Column(db.DateTime, nullable = False)
-    residente_id = db.Column(db.Integer, ForeignKey('residentes.id'))
+
+    residente_id = db.Column(db.Integer, db.ForeignKey('residentes.id'))
 
     def serialize(self):
         return{
