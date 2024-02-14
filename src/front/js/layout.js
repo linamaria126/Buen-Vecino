@@ -6,9 +6,11 @@ import { Registration } from "./pages/Registration.jsx";
 import  ModalApproval   from "./pages/ModalApproval.jsx";
 import { Home } from "./pages/Home.jsx";
 import { Single } from "./pages/single";
+import  UserRegister  from "./pages/UserRegister.jsx";
 import  Homeadmin  from "./pages/Homeadmin.jsx";
 import injectContext from "./store/appContext";
 import  Footer  from "./component/footer.jsx";
+
 
 
 
@@ -29,6 +31,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Homeadmin />} path="/homeadmin" />
                         <Route element={<Registration />} path="/registration" />
+                        <Route element={<UserRegister />} path="/userRegister" />
                         <Route element={<ModalApproval />} path="/modalApprobal" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

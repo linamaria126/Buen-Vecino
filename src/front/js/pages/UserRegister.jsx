@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
-import { Context } from "../store/appContext";
-
-export const Registration = () => {
-  const { store, actions } = useContext(Context);
-
+const userRegister = () => {
   return (
     <div className="container pt-5 w-auto p-10 m-10 bg-gray-50">
       <div className="min-h-screen flex flex-col">
@@ -22,7 +17,7 @@ export const Registration = () => {
               <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
                 <div className="px-4 py-5 sm:p-6">
                   <h3 className="text-2xl leading-6 font-medium text-gray-900 fw-bold">
-                    Crear Perfil - Unidad Residencial
+                    Crear Perfil - Residente
                   </h3>
                   <div className="mt-5">
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm">
@@ -33,65 +28,73 @@ export const Registration = () => {
                         </h4>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-6">
+                      <div className="grid grid-cols-3 gap-6">
                         <div>
                           <label className="block text-sm font-medium text-gray-700">
-                            Nombre Unidad Residencial
+                            Número apartamento
                           </label>
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Unidad Res. Remansos del Lili"
+                            placeholder="401"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700">
-                            Nit
+                            Torre
                           </label>
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="900.232.500.120"
+                            placeholder="1"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <p className="block text-sm font-medium text-gray-700 px-5 fw-bold">
+                            Tipo de residente
+                          </p>
+                          <div className="flex flex-row">
+                            <input
+                              type="radio"
+                              name="tipo"
+                              value="Inquilino"
+                              className="pt-4"
+                            />
+                            <label for="tipo" className="px-2">
+                              Inquilino
+                            </label>
+                          </div>
+                          <div fclassName="flex flex-row">
+                          <input
+                            type="radio"
+                            name="tipo"
+                            value="Propietario"
+                            className="pt-4"
+                          />
+                          <label for="tipo" className="px-2">
+                            Propietario
+                          </label>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Unidad Residencial
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Remansos del Lili"
+                            readonly
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700">
-                            Dirección
+                            Código de la Unidad Residencial
                           </label>
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Cra 102 # 34-133"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Teléfono
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="602-400-502-600"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Cantidad de apartamentos o Casas
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="200"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Cantidad de Torres
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="6"
+                            placeholder="0245"
                           />
                         </div>
                       </div>
@@ -100,7 +103,7 @@ export const Registration = () => {
                       <div className="py-3">
                         <i class="fa-solid fa-user inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
-                          Datos representante legal
+                          Datos del Residente
                         </h4>
                       </div>
                       <div className="grid grid-cols-2 gap-6 mt-4">
@@ -148,6 +151,98 @@ export const Registration = () => {
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
                       <div className="py-3">
+                        <i class="fa-solid fa-car inline text-lg pr-3"></i>
+                        <h4 className="inline fw-bold text-lg">
+                          Datos del Vehículo
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6 mt-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Marca
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Marca"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Modelo
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Modelo"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Placa
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="placa"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Color
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="color"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
+                        
+                      <div className="py-3">
+                        <i class="fa-solid fa-dog inline text-lg pr-3"></i>
+                        <h4 className="inline fw-bold text-lg">
+                          Datos de la mascota
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-3 gap-6 mt-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Tipo de mascota
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Marca"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Raza
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Modelo"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Nombre
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="placa"
+                          />
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
+                      <div className="py-3">
                         <i class="fa-solid fa-lock inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Datos de ingreso a la plataforma
@@ -156,8 +251,7 @@ export const Registration = () => {
                       <div className="grid grid-cols-2 gap-6 mt-4">
                         <div className="col-span-2">
                           <label className="block text-sm font-medium text-gray-700">
-                            Correo electrónico (que usa como administrador de la
-                            Unidad Residencial)
+                            Correo electrónico (se recomienda usar el mismo que emplea para comunicación con su Unidad Residencial)
                           </label>
                           <input
                             type="email"
@@ -226,3 +320,5 @@ export const Registration = () => {
     </div>
   );
 };
+
+export default userRegister;
