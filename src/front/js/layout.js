@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Registration } from "./pages/Registration.jsx";
 import  ModalApproval   from "./pages/ModalApproval.jsx";
-import { Home } from "./pages/Home.jsx";
+import  Home  from "./pages/Home.jsx";
 import { Single } from "./pages/single";
 import  UserRegister  from "./pages/UserRegister.jsx";
 import  Homeadmin  from "./pages/Homeadmin.jsx";
