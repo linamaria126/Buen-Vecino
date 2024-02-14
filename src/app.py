@@ -68,11 +68,6 @@ def serve_any_other_file(path):
     return response
 
 
-# @app.route('/apartment', methods=['GET'])
-# def get_apto_info():
-#     return{
-#         "msg": "aqui encuentras la informacion por apartamento"
-#     }
 
 
 # this only runs if `$ python src/main.py` is executed
