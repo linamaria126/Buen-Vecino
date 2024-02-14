@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
 
-export const Navbar = () => {
-	return (
+const Navbar = () => {
+  return (
+	
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
@@ -15,5 +15,8 @@ export const Navbar = () => {
 				</div>
 			</div>
 		</nav>
-	);
-};
+	
+  )
+}
+
+export default Navbar;

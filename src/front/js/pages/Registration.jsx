@@ -226,3 +226,6 @@ export const Registration = () => {
     </div>
   );
 };
+
+
+export default Registration
