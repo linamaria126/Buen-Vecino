@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Homeadmin = () => {
-  return (
-    <div>H</div>
-  )
-}
+  return <h1 className="">Hello world!</h1>;
+};
 
 export default Homeadmin;
