@@ -1,10 +1,11 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from flask import Flask, request, jsonify, url_for, Blueprint, json
+from api.models import db, User, Publicaciones
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -28,80 +29,46 @@ def get_info():
         "msg": "de aqui deberias poder acceder a toda la informacion"
     }
 
-@api.route('/apartment', methods=['GET'])
-def get_apto_info():
-    return{
-        "msg": "aqui encuentras la informacion por apartamento"
-    }
+@api.route('/publicaciones/<int:unidad_id>', methods=['GET'])
+def get_publicaciones(unidad_id):
+    post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).all()
+    all_items =[
+        item.serialize() for item in post
+    ]
+    return jsonify(all_items)
 
-@api.route('/residente', methods=['POST'])
-def create_user():
-    body = request.json
-    id = body.get('id', None)
-    nombres = body.get('nombres', None)
-    apellidos = body.get('apellido', None)
-    tipo = body.get('tipo', None)
-    cedula = body.get('cedula', None)
-    password = body.get('password', None)
-    email = body.get('email', None)
-    is_active = body.get('is_active', None)
-    unidad_residencial_id = body.get('unidad_residencial_id', None)
-    apartamento_id = body.get('apartamento_id', None)
-    publicaciones = body.get('publicaciones', None)
     
-    if id is None:
-        return{
-            'Error': 'se requiere llenar el campo "id"'
-        }
     
-    if nombres is None:
-        return{
-            'Error': 'se requiere llenar el campo "nombres"'
-        }
+
     
-    if apellidos is None:
-        return{
-            'Error': 'se requiere llenar el campo "apellidos"'
-        }
+        
     
-    if tipo is None:
-        return{
-            'Error': 'se requiere llenar el campo "tipo"'
-        }
+
+  
     
-    if cedula is None:
-        return{
-            'Error': 'se requiere llenar el campo "cedula"'
-        }
+@api.route('/publicaciones', methods=['POST'])
+def create_post():
+    body= request.json
+    contenido=body.get('contenido', None)
+    unidad_id = body.get("unidad_residencial_id", None)
+
+    if contenido is None:
+        return jsonify({'Error': 'Debes agregar un contenido a tu publicacion'}), 400
     
-    if password is None:
-        return{
-            'Error': 'se requiere llenar el campo "password"'
-        }
+    if unidad_id is None:
+        return jsonify({'Error': 'Debes agregar el numero de su unidad residencial'}), 400
     
-    if email is None:
-        return{
-            'Error': 'se requiere llenar el campo "email"'
-        }
+    current_date=datetime.now()
+
+    new_post = Publicaciones(contenido = contenido, hora_publicacion=current_date, unidad_residencial_id=unidad_id)
+    db.session.add(new_post)
+
+    try:
+        db.session.commit()
+        return jsonify("Publicacion creada")
+    except Exception as error:
+        db.session.rollback()
+        return 'Hubo un problema con tu publicacion'
     
-    if is_active is None:
-        return{
-            'Error': 'se requiere llenar el campo "is_active"'
-        }
-    
-    if unidad_residencial_id is None:
-        return{
-            'Error': 'se requiere llenar el campo "unidad_residencial_id"'
-        }
-    
-    if apartamento_id is None:
-        return{
-            'Error': 'se requiere llenar el campo "apartamento_id"'
-        }
-    
-    if publicaciones is None:
-        return{
-            'Error': 'se requiere llenar el campo "publicaciones"'
-        }
-    
+
    

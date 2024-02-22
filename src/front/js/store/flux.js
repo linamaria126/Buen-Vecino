@@ -1,54 +1,36 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+  return {
+    store: {
+      api: "https://symmetrical-journey-r4g6gr7g7p9p3xrv9-3001.app.github.dev/api/",
+      publicaciones: [],
+    },
+    actions: {
+      addPublicacion: async (publicando) => {
+        console.log(publicando);
+        const store = getStore();
+        const response = await fetch(store.api + "publicaciones", {
+          method: "POST",
+          body: JSON.stringify({ contenido: publicando }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          getActions().getPublicaciones()
+        }
+        console.log(await response.json());
+      },
+      getPublicaciones: async () => {
+        const store = getStore();
+        const response = await fetch(store.api + "publicaciones/1");
+        const allPosts = await response.json();
+        setStore({ publicaciones: allPosts });
+        console.log(publicaciones)
+        console.log(allPosts)
+      },
+    },
+   
+  };
 };
 
 export default getState;

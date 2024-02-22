@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../component/navbar.jsx";
 import ModalBoard from "../component/ModalBoard.jsx";
 import CardBoard from "../component/CardBoard.jsx";
