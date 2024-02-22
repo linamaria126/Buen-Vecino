@@ -9,7 +9,7 @@ const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 				</Link>
 				<div className="ml-auto">
-					<Link to="/registration">
+					<Link to="/resident">
 						<button className="btn btn-primary">Check the Context in action</button>
 					</Link>
 				</div>

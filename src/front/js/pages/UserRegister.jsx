@@ -14,7 +14,7 @@ const userRegister = () => {
         <main className="flex-grow">
           <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+              <div className="border-4 border-dashed border-gray-200 rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                   <h3 className="text-2xl leading-6 font-medium text-gray-900 fw-bold">
                     Crear Perfil - Residente
@@ -83,8 +83,8 @@ const userRegister = () => {
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Remansos del Lili"
-                            readonly
+                            value="Remansos del Lili"
+                            readOnly
                           />
                         </div>
                         <div>
@@ -94,7 +94,8 @@ const userRegister = () => {
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="0245"
+                            value="0245"
+                            readOnly
                           />
                         </div>
                       </div>

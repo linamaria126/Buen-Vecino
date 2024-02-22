@@ -28,20 +28,18 @@ const Layout = () => {
   return (
     <div>
       <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Homeuser />} path="/homeuser" />
-            <Route element={<Homeadmin />} path="/homeadmin" />
-            <Route element={<Registration />} path="/registration" />
-            <Route element={<UserRegister />} path="/userRegister" />
-            <Route element={<ModalApproval />} path="/modalApprobal" />
-            <Route element={<Board />} path="/board" />
-            <Route element={<Single />} path="/single/:theid" />
-            <Route element={<h1>Not found!</h1>} />
-          </Routes>
-          <Footer />
-        </ScrollToTop>
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Homeuser />} path="/homeuser" />
+          <Route element={<Homeadmin />} path="/homeadmin" />
+          <Route element={<Registration />} path="/unidad_residencial" />
+          <Route element={<UserRegister />} path="/resident" />
+          <Route element={<ModalApproval />} path="/modalApprobal" />
+          <Route element={<Board />} path="/board" />
+          <Route element={<Single />} path="/single/:theid" />
+          <Route element={<h1>Not found!</h1>} />
+        </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
