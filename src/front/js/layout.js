@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Registration } from "./pages/Registration.jsx";
 import ModalApproval from "./pages/ModalApproval.jsx";
@@ -15,6 +14,10 @@ import UserRegister from "./pages/UserRegister.jsx";
 import injectContext from "./store/appContext";
 import Footer from "./component/footer.jsx";
 import Homeuser from "./pages/Homeuser.jsx";
+import Paneladmin from "./pages/Paneladmin.jsx";
+import Modal from "./pages/Modal.jsx";
+import ModalgenericP from "./pages/ModalgenericP.jsx";
+import Aprobaciones from "./pages/Aprobaciones.jsx";
 
 //create your first component
 const Layout = () => {
@@ -28,7 +31,7 @@ const Layout = () => {
   return (
     <div>
       <BrowserRouter basename={basename}>
-        <ScrollToTop>
+        
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Homeuser />} path="/homeuser" />
@@ -36,12 +39,16 @@ const Layout = () => {
             <Route element={<Registration />} path="/registration" />
             <Route element={<UserRegister />} path="/userRegister" />
             <Route element={<ModalApproval />} path="/modalApprobal" />
+            <Route element={<Modal />} path="/modal" />
+            <Route element={<ModalgenericP />} path="/modalgeneric" />
+            <Route element={<Aprobaciones />} path="/aprobaciones" />
             <Route element={<Board />} path="/board" />
+            <Route element={<Paneladmin/>} path="/paneladmin"/>
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
-        </ScrollToTop>
+       
       </BrowserRouter>
     </div>
   );
