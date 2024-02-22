@@ -2,9 +2,12 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Residentes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token
+
 
 api = Blueprint('api', __name__)
 
@@ -104,4 +107,18 @@ def create_user():
             'Error': 'se requiere llenar el campo "publicaciones"'
         }
     
-   
+    hashed_password = generate_password_hash(password)
+    
+@api.route("/login")
+    
+@api.route('/get/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user=Residentes.query.filter_by(id=user_id).one_or_none()
+    
+    if user is None:
+        return jsonify({'Error' : 'user not found'}), 404
+    return jsonify ({'user': user.serialize})
+
+    
+
+

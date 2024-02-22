@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../img/logo.png';
+import buenlogo from '../../img/buenlogo.png';
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-sm">
           <div className="py-2">
-            <img src={logo} alt="logo" className="h-10 w-30" />
+            <img src={buenlogo} alt="logo" className="h-10 w-30" />
 
           </div>
           <nav class="mb-4">
