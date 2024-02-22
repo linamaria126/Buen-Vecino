@@ -50,7 +50,7 @@ export const Registration = () => {
         <main className="flex-grow">
           <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+              <div className="border-4 border-dashed border-gray-200 rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                   <h3 className="text-2xl leading-6 font-medium text-gray-900 fw-bold">
                     Crear Perfil - Unidad Residencial
@@ -397,5 +397,4 @@ export const Registration = () => {
   );
 };
 
-
-export default Registration
+export default Registration;
