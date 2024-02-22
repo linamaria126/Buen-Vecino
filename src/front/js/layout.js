@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Registration } from "./pages/Registration.jsx";
 import ModalApproval from "./pages/ModalApproval.jsx";
@@ -15,6 +14,7 @@ import UserRegister from "./pages/UserRegister.jsx";
 import injectContext from "./store/appContext";
 import Footer from "./component/footer.jsx";
 import Homeuser from "./pages/Homeuser.jsx";
+import Paneladmin from "./pages/Paneladmin.jsx";
 import Modal from "./pages/Modal.jsx";
 import ModalgenericP from "./pages/ModalgenericP.jsx";
 import Aprobaciones from "./pages/Aprobaciones.jsx";
@@ -43,6 +43,7 @@ const Layout = () => {
             <Route element={<ModalgenericP />} path="/modalgeneric" />
             <Route element={<Aprobaciones />} path="/aprobaciones" />
             <Route element={<Board />} path="/board" />
+            <Route element={<Paneladmin/>} path="/paneladmin"/>
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>

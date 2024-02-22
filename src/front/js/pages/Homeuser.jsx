@@ -1,30 +1,38 @@
 import React from "react";
 import logo from "../../img/logo.png";
-import image1290 from "../../img/image1290.png";
-import image2 from "../../img/Image2.png";
+import image1 from "../../img/image1290.png"
+import image2 from "../../img/image9.png"
+import image3 from "../../img/image1.png"
+import image4 from "../../img/image7.png"
+import user_circle from "../../img/User_circle.png"
+import Handshake from "../../icons/Handshake.js"
+import { useNavigate } from "react-router-dom";
+
+
 
 const Homeuser = () => {
+  const navigate = useNavigate()
   return (
     <>
       <nav className="container flex justify-between mt-2">
-        <img src={logo} alt="logo" />
-        <button className="rounded-full py-2 px-4 bg-[#796FC3FF] text-white text-center hover:bg-purple-900 ">
+        <img src={logo} alt="logo" className="w-40" />
+        <button onClick={() => navigate("/")} className="shadow-xl rounded-full py-2 px-4 bg-[#9890D1FF] text-white text-center hover:bg-purple-900 ">
           Logout
         </button>
       </nav>
-      <div className="relative mt-10 h-96 bg-[#796FC3FF] flex justify-center">
+      <div className=" relative mt-10 h-96 bg-[#9890D1FF] flex justify-center">
         <div className="absolute left-48 bottom-56 purple-200">
           <img
-            src={image1290}
-            alt="women with hair large"
-            className="rounded-full w-36 h-36 bg-slate-300 purple-200 bg-[#FFDFF1FF]"
+            src={image1}
+            alt="f"
+            className=" rounded-full w-36 h-36 bg-[#D6D3EDFF]"
           />
         </div>
         <div className="absolute left-96 bottom-40">
           <img
             src={image2}
             alt="f"
-            className="rounded-full w-28 h-28 bg-slate-300"
+            className="rounded-full w-28 h-28 bg-[#FFDFF1FF]"
           />
         </div>
         <div className="flex items-stretch justify-around rounded-t-full w-96 h-56 bg-slate-300 absolute bottom-0">
@@ -34,44 +42,42 @@ const Homeuser = () => {
         </div>
         <div className="absolute right-96 bottom-40">
           <img
-            src=""
+            src={image3}
             alt="f"
-            className="rounded-full w-36 h-36 bg-slate-300 "
+            className="rounded-full w-36 h-36 bg-[#D0EBF6FF]"
           />
         </div>
         <div className="absolute right-52 bottom-64">
           <img
-            src=""
+            src={image4}
             alt="f"
-            className="rounded-full w-28 h-28 bg-slate-300 "
+            className="rounded-full w-30 h-28 bg-[#F8F9FAFF] "
           />
         </div>
       </div>
       <div className="flex justify-center gap-36 mt-20">
-        <article className="flex justify-evenly flex-col h-64 bg-gray-300">
-          <i></i>
-          <h1 className="text-lg text-center">Board de negocios</h1>
-          <p className="mx-3 text-base text-center">
+        <article className="select-none cursor-pointer rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 shadow-xl flex justify-around flex-col w-72 h-64 bg-gray-300">
+          <div className="flex justify-center bg-#9890D1FF">
+            <Handshake onClick={() => navigate("/board")} className="w-40 fill-[#9890D1FF] font-black" />
+          </div>
+          <h1 className="text-2xl text-center font-bold">Board de negocios</h1>
+          <p className="text-base text-center">
             Labore proident nisi fugiat nostrud
           </p>
         </article>
-        <article className="flex justify-evenly flex-col h-64 bg-gray-300">
-          <i></i>
-          <h1 className="text-lg text-center">Reserva aquí</h1>
-          <p className="mx-3 text-base text-center">
+        <article className="select-none cursor-pointer rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 flex justify-around shadow-xl  flex-col w-72 h-64 bg-gray-300">
+          <div className="flex justify-center">
+            <img onClick={() => navigate("/reservation")} src={user_circle} alt="" className="w-28" />
+          </div>
+          <h1 className="text-2xl text-center font-bold">Reserva aquí</h1>
+          <p className="text-base text-center">
             Labore proident nisi fugiat nostrud
           </p>
         </article>
       </div>
       <div className="container">
-        <hr className="mt-28" />
+        <hr className="mt-28 mx-2" />
       </div>
-      <footer>
-        <i>a</i>
-        <i>a</i>
-        <i>a</i>
-        <i>a</i>
-      </footer>
     </>
   );
 };
