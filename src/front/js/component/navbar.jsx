@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../../styles/index.css';
-import logo from '../../img/logo.png';
+import buenlogo from '../../img/buenlogo.png';
 
 
 
@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex items-center justify-between flex-wrap bg-white p-4">
-        <img src={logo} alt="logo" className="h-20 w-30 mr-10 mt-3" />
+        <img src={buenlogo} alt="logo" className="h-20 w-30 mr-10 mt-3" />
 
         <div className="flex items-center flex-shrink-0 text-white mr-6">
 
@@ -22,13 +22,13 @@ const Navbar = () => {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-md font-body lg:flex-grow lg:flex justify-around ">
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4">
+            <a href="#quienes-somos" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4">
               Acerca de nosotros
             </a>
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4 font-body">
+            <a href="#caracteristicas" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4 font-body">
               Características
             </a>
-            <a href="#responsive-header"><Link to={'/pages/Login'} button className="bg-[#796FC3FF]  block mt-2 lg:inline-block lg:mt-0 text-white-600 hover:bg-[#796FC3FF] text-white font-body py-2 px-4 rounded-full ms-5">
+            <a href="#responsive-header"><Link to={'/pages/Login'} button className="bg-[#796FC3FF] mt-3 lg:inline-block lg:mt-0  text-white-600 hover:bg-[#796FC3FF] text-white font-body py-2 px-4 rounded-full ms-5">
               Iniciar sesión</Link></a>
           </div>
           <div>

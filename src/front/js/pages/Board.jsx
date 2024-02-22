@@ -22,6 +22,26 @@ const Board = () => {
               />
             </svg>
             <h1 className="font-bold ">Board de negocios</h1>
+            <div className="container mx-auto px-4 py-2">
+              <div className="flex items-center space-x-2 border-b-2 border-gray-200 pb-4">
+                <i className="fas fa-paw text-gray-400"></i>
+                <span className="text-xl font-semibold">Board Business</span>
+              </div>
+              <div className="mt-4">
+                <label
+                  for="message"
+                  className="block text-lg font-medium text-gray-700"
+                >
+                  Message:
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  className="shadow-sm mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                ></textarea>
+              </div>
+            </div>
           </div>
         </div>
         <input type="text" placeholder="Post" />
