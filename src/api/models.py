@@ -35,7 +35,7 @@ class Unidad_residencial(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     apartamento = db.relationship('Apartamento', backref='unidad_residencial')
-    residentes = db.relationship('Residentes', backref='unidad_residencial')
+    residente = db.relationship('Residente', backref='unidad_residencial')
     publicaciones = db.relationship('Publicaciones', backref='unidad_residencial')
 
     def serialize(self):
@@ -47,10 +47,10 @@ class Unidad_residencial(db.Model):
             "telefono": self.telefono,
             "cant_apto": self.cant_apto,
             "cant_torres": self.cant_torres,
-            
+            "is_active": self.is_active,
             "apartamento": self.apartamento,
             "residente": self.residente
-        }
+        }   
     
 
 class Residente(db.Model):
@@ -64,10 +64,10 @@ class Residente(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable = False)
     is_active = db.Column(db.Boolean, nullable = False)
-    reservas = db.relationship('Reservas', backref='residentes')
+    reservas = db.relationship('Reservas', backref='residente')
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
-    # publicaciones = db.relationship('Publicaciones', backref='residentes')
+    # publicaciones = db.relationship('Publicaciones', backref='residente')
 
 
     def serialize(self):
@@ -80,7 +80,7 @@ class Residente(db.Model):
             "cedula": self.cedula,
             "email": self.email, # tener en cuenta que no aparece password.
             "is_active": self.is_active,
-            "publicaciones": self.publicaciones,
+            #"publicaciones": self.publicaciones,
             "unidad_residencial_id": self.unidad_residencial_id,
             "apartamento_id": self.apartamento_id
             
@@ -91,8 +91,8 @@ class Apartamento(db.Model):
     __tablename__ = 'apartamento'
 
     id = db.Column(db.Integer, primary_key = True)
-    torre = db.Column(db.Integer, nullable = False)
-    num_apto = db.Column(db.Integer, nullable = False)
+    torre = db.Column(db.String(10), nullable = False)
+    num_apto = db.Column(db.String(10), nullable = False)
     num_habitantes = db.Column(db.Integer, nullable = False)
     residente = db.relationship('Residente', backref='apartamento')
     vehiculos = db.relationship('Vehiculos', backref='apartamento')
@@ -116,10 +116,12 @@ class Apartamento(db.Model):
 
 class Vehiculos(db.Model):
     __tablename__ = 'vehiculos'
-    id = db.Column(db.String(10), primary_key = True)
+    id = db.Column(db.Integer, primary_key = True)
+    placa = db.Column(db.String(10), nullable = False)
     marca = db.Column(db.String(50), nullable = False)
     modelo = db.Column(db.Integer, nullable = False)
     color = db.Column(db.String(15), nullable = False)
+
 
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
 
@@ -129,7 +131,7 @@ class Vehiculos(db.Model):
             "id": self.id,
             "placa": self.placa,
             "marca": self.marca,
-            "marca": self.marca,
+            "modelo": self.modelo,
             "color": self.color,
             "apartamento_id": self.apartamento_id
         }
@@ -139,7 +141,7 @@ class Mascotas(db.Model):
     __tablename__ = 'mascotas'
     id = db.Column(db.Integer, primary_key = True)
     tipo = db.Column(db.String(50), nullable = False)
-    raza = db.Column(db.String(50), nullable = False)
+    raza = db.Column(db.String(50), nullable = True)
     nombre = db.Column(db.String(100), nullable = False)
 
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
@@ -179,7 +181,7 @@ class Publicaciones(db.Model):
     contenido = db.Column(db.String(500), nullable = False)
     creacion = db.Column(db.DateTime, nullable = False)
 
-    # residente_id = db.Column(db.Integer, db.ForeignKey('residentes.id'))
+    # residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
 
     def serialize(self):

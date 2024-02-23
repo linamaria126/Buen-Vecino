@@ -2,11 +2,11 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones
+from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones, Mascotas, Apartamento
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token
+#from flask_jwt_extended import JWTManager, create_access_token
 
 api = Blueprint('api', __name__)
 
@@ -14,7 +14,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-@api.route('/unidad_residencial', methods=['POST'])
+@api.route('/registration', methods=['POST'])
 def create_unit():
     
     body=request.json
@@ -74,9 +74,9 @@ def create_unit():
         }), 400
     
     hashed_passwords = generate_password_hash(password)
-    new_unit_user = Unidad_residencial(nombre_unidad=nombre_unidad, nit=nit, direccion=direccion, telefono=telefono, cant_apto=cant_apto, cant_torres=cant_torres)
-    new_user=Residente(nombres=nombres_admin, apellidos=apellidos, celular=celular, cedula=cedula, email=email, password=hashed_passwords, is_active=True)
-    
+    new_unit_user = Unidad_residencial(nombre_unidad=nombre_unidad, nit=nit, direccion=direccion, telefono=telefono, cant_apto=cant_apto, cant_torres=cant_torres, is_active=True)
+    new_user=Residente(nombres=nombres_admin, apellidos=apellidos, celular=celular, cedula=cedula, email=email, password=hashed_passwords, is_active=True, tipo="administrador")
+  
     
     db.session.add(new_unit_user)
     db.session.add(new_user)
@@ -85,6 +85,7 @@ def create_unit():
         return 'Unit created'
     except Exception as error:
         db.session.rollback()
+        print(error)
         return 'ha ocurrido un error', 500
  
 
@@ -135,10 +136,12 @@ def create_post():
         return 'Hubo un problema con tu publicacion'
     
 
-@api.route('/resident', methods=['POST'])
+@api.route('/userRegister/', methods=['POST'])
 def create_resident():
     body=request.json
 
+    torre=body.get("torre", None)
+    num_apto=body.get("num_apto", None)
     tipo=body.get('tipo', None)
     nombres=body.get('nombres', None)
     apellidos = body.get('apellidos', None)
@@ -149,25 +152,75 @@ def create_resident():
     placa_vehiculo=body.get('placa_vehiculo', None)
     color_vehiculo=body.get('color_vehiculo', None)
     pet_tipo= body.get('pet_tipo', None)
-    pet_raza=body.get('pet_raza', None)
+    raza=body.get('pet_raza', None)
     pet_nombre=body.get('pet_nombre', None)
     email=body.get('email', None)
     password=body.get('password', None)
+    unidad_residencial_id=body.get('unidad_residencial_id', None)
+
+    if torre is None:
+        return jsonify({
+            "error": "El numero de torre es requerido para crear el usuario"
+        }), 400 
+    elif num_apto is None:
+        return jsonify({
+            "error": "El numero de apartamento es requerido para crear el usuario"
+        }), 400
+    
+    
+    # apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
+    # if apto is None:
+    #     return jsonify({
+    #         "error": "El numero de apartamento no existe"
+    #     }), 404
+    
 
     
-    if tipo is None or nombres is None or apellidos is None or celular is None or cedula is None or marca_vehiculo is None or modelo_vehiculo is None or placa_vehiculo is None or color_vehiculo is None or pet_tipo is None or pet_raza is None or pet_nombre is None or email is None or password is None:
-        return{
-           
-            "error": "El campo es requerido para crear el Usuario"
-        }, 400 
+    
+    if tipo is None:
+        return jsonify({
+            "error": "El tipo de Residente es requerido para crear el usuario"
+        }), 400
+    
+    # aquí debo hacer un ciclo, según me dijo Octavio, pero no entiendo cual sería la función de ello.
+    
+    elif nombres is None:
+        return jsonify({
+            "error": "El Nombre del Residente es requerido para crear el usuario"
+        }), 400
+    
+    elif apellidos is None:
+        return jsonify({
+            "error": "El Apellido del Residente es requerido para crear el usuario"
+        }), 400
+   
+    elif celular is None:
+        return jsonify({
+            "error": "El Celular del Residente es requerido para crear el usuario"
+        }), 400
+    elif cedula is None:
+        return jsonify({
+            "error": "La cédula del Residente es requerido para crear el usuario"
+        }), 400
+    elif  email is None:
+        return jsonify({
+            "error": "El email del Residente es requerido para crear el usuario"
+        }), 400
+    elif  password is None:
+        return jsonify({
+            "error": "El email del Residente es requerido para crear el usuario"
+        }), 400
 
     hashed_resident_passwords = generate_password_hash(password)
-    new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular, cedula=cedula, pet_tipo=pet_tipo, pet_raza=pet_raza, pet_nombre=pet_nombre, email=email, password=hashed_resident_passwords, is_active=False)
-
-    new_vehicle = Vehiculos(marca_vehiculo=marca_vehiculo, modelo_vehiculo=modelo_vehiculo, placa_vehiculo=placa_vehiculo, color_vehiculo=color_vehiculo)
+    new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular,
+                          cedula=cedula, email=email,password=hashed_resident_passwords, is_active=False,
+                          unidad_residencial_id=unidad_residencial_id)
+    new_vehicle = Vehiculos(marca=marca_vehiculo, modelo=modelo_vehiculo, placa=placa_vehiculo, color=color_vehiculo)
+    new_pet = Mascotas(tipo=pet_tipo, raza=raza, nombre=pet_nombre)
 
     db.session.add(new_user)
     db.session.add(new_vehicle)
+    db.session.add(new_pet)
 
     try:
         db.session.commit()
