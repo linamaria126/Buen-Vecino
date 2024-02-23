@@ -180,7 +180,6 @@ class Publicaciones(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     contenido = db.Column(db.String(500), nullable = False)
     creacion = db.Column(db.DateTime, nullable = False)
-
     # residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
 
@@ -188,7 +187,6 @@ class Publicaciones(db.Model):
         return{
             "id": self.id,
             "contenido": self.contenido,
-            "hora_publicacion": self.hora_publicacion,
+            "creacion": self.creacion,
             # "residente_id": self.residente_id
-            
         }

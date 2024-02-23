@@ -9,9 +9,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       addPublicacion: async (publicando) => {
         console.log(publicando);
         const store = getStore();
+        console.log(store.publicaciones)
         const response = await fetch(store.api + "publicaciones", {
           method: "POST",
-          body: JSON.stringify({ contenido: publicando }),
+          body: JSON.stringify({ contenido: publicando.contenido,
+          unidad_residencial_id: parseInt(publicando.unidad_residencial_id) }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -26,7 +28,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const response = await fetch(store.api + "publicaciones/1");
         const allPosts = await response.json();
         setStore({ publicaciones: allPosts });
-        console.log(publicaciones)
         console.log(allPosts)
       },
 

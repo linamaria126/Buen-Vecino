@@ -7,7 +7,8 @@ const CardBoard = () => {
     return (
         <div className='container'>
             <div >
-                {store.publicaciones.map((publicacion) => {
+                {
+                 store.publicaciones.map((publicacion) => {
                     return (
                         <div key={publicacion.id}>
                             <div></div>

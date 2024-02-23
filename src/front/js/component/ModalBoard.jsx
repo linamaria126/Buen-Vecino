@@ -9,11 +9,11 @@ const ModalBoard = () => {
 
     const [modalClose, setModalClose] = useState(false)
     const [publicacion, setPublicacion] = useState({
-        publicacion
+        contenido: "",
+        unidad_residencial_id: ''
     })
     const handlePost = (event) => {
-        setPublicacion(event.target.value)
-
+        setPublicacion({...publicacion, [event.target.name]: event.target.value})
         console.log(publicacion)
     }
     const handleSubmit = async (event) => {
@@ -55,7 +55,11 @@ const ModalBoard = () => {
                         <form className="bg-white p-5 rounded flex flex-col  gap-5 w-[600px]" onSubmit={handleSubmit}>
                             <div>
                                 <label className=" w-[500px] flex justify-start mr-3 font-semibold" htmlFor="publicacion">Agrega tu publicacion</label>
-                                <textarea type="text" onChange={handlePost} name="publicacion" id="publicacion" placeholder="Contenido" className="form-control  rounded-lg px-2 border-gray-300 mt-3 flex items-center justify-center" />
+                                <textarea type="text" onChange={handlePost} name="contenido" id="publicacion" placeholder="Contenido" className="form-control  rounded-lg px-2 border-gray-300 mt-3 flex items-center justify-center" />
+                            </div>
+                            <div>
+                                <label className=" w-[500px] flex justify-start mr-3 font-semibold" htmlFor="publicacion">ID de tu unidad residencial</label>
+                                <textarea type="text" onChange={handlePost} name="unidad_residencial_id" id="publicacion" placeholder="ID" className="form-control  rounded-lg px-2 border-gray-300 mt-3 flex items-center justify-center" />
                             </div>
                             <div className="flex space-x-3">
                                 <button className="mt-4 bg-[#796FC3FF] text-white rounded-full hover:bg-[#554e88] p-2" onClick={() => setModalClose(false)}>
