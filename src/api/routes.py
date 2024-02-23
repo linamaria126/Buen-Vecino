@@ -99,9 +99,11 @@ def create_unit():
 @api.route('/publicaciones/<int:unidad_id>', methods=['GET'])
 def get_publicaciones(unidad_id):
     post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).all()
+    print(post)
     all_items =[
         item.serialize() for item in post
     ]
+    print(post)
     return jsonify(all_items)
 
     
