@@ -2,11 +2,12 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones
+from api.models import db, Unidad_residencial, Residente, Vehiculos, Publicaciones
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token
+# from flask_jwt_extended import JWTManager, create_access_token
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -102,14 +103,6 @@ def get_publicaciones(unidad_id):
     return jsonify(all_items)
 
     
-    
-
-    
-        
-    
-
-  
-    
 @api.route('/publicaciones', methods=['POST'])
 def create_post():
     body= request.json
@@ -124,7 +117,7 @@ def create_post():
     
     current_date=datetime.now()
 
-    new_post = Publicaciones(contenido = contenido, hora_publicacion=current_date, unidad_residencial_id=unidad_id)
+    new_post = Publicaciones(contenido = contenido, creacion=current_date, unidad_residencial_id=unidad_id)
     db.session.add(new_post)
 
     try:
@@ -186,7 +179,7 @@ def get_user(user_id):
     
     if user is None:
         return jsonify({'Error' : 'user not found'}), 404
-    return jsonify ({'user': user.serialize})
+    return jsonify ({'user': user.serialize()})
 
     
 

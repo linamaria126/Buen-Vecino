@@ -35,7 +35,7 @@ class Unidad_residencial(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     apartamento = db.relationship('Apartamento', backref='unidad_residencial')
-    residentes = db.relationship('Residentes', backref='unidad_residencial')
+    residente = db.relationship('Residente', backref='unidad_residencial')
     publicaciones = db.relationship('Publicaciones', backref='unidad_residencial')
 
     def serialize(self):
@@ -64,10 +64,10 @@ class Residente(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable = False)
     is_active = db.Column(db.Boolean, nullable = False)
-    reservas = db.relationship('Reservas', backref='residentes')
+    reservas = db.relationship('Reservas', backref='residente')
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
-    # publicaciones = db.relationship('Publicaciones', backref='residentes')
+    # publicaciones = db.relationship('Publicaciones', backref='residente')
 
 
     def serialize(self):
@@ -178,15 +178,13 @@ class Publicaciones(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     contenido = db.Column(db.String(500), nullable = False)
     creacion = db.Column(db.DateTime, nullable = False)
-
-    # residente_id = db.Column(db.Integer, db.ForeignKey('residentes.id'))
+    # residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
 
     def serialize(self):
         return{
             "id": self.id,
             "contenido": self.contenido,
-            "hora_publicacion": self.hora_publicacion,
+            "creacion": self.creacion,
             # "residente_id": self.residente_id
-            
         }
