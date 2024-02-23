@@ -241,7 +241,7 @@ export const Registration = () => {
                           ejerza el derecho de borrar sus datos.
                         </p>
 
-                        {modalOpen && (<div className="fixed inset-0 opacity-80 backdrop-blur-xl backdrop-contrast-50 bg-white/30 flex justify-center items-center">
+                        {modalOpen && (<div className="fixed inset-0 opacity-90 backdrop-blur-xl backdrop-contrast-50 bg-white/30 flex justify-center items-center">
                           <div className="bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
 
                             <div className="text-4xl font-title font-bold mb-2 py-3 px-5 bg-slate-200">
@@ -347,19 +347,19 @@ export const Registration = () => {
                         Submit
                         {modalOpenSubmit && (
 
-                          <div className="fixed inset-0 bg-black opacity-60 backdrop-blur-sm flex justify-center items-center">
+                          <div className="fixed inset-0 bg-black opacity-80 backdrop-blur-sm">
                             <div className=" container bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
 
                               <div className="grid grid-cols-2 ">
                                 <div className="col-span-2 bg-slate-200">
-                                  <h5 className="mx-3 my-2 font-title font-bold">Tu suscripción está en proceso</h5></div>
+                                  <h5 className="mx-4 my-2 font-title font-bold text-black text-left">Tu suscripción está en proceso</h5></div>
 
-                                <div className="bg-[#5549AF38] flex justify-center items-center relative ">
-                                  <h3 className="font-body text-black text-4xl mx-5">Felicitaciones!</h3>
+                                <div className="bg-[#5549AF38] flex text left items-center relative ">
+                                  <h3 className="font-body text-black text-4xl mx-4">Felicitaciones!</h3>
                                   <i className="fa-solid fa-caret-up text-[#D0EBF6FF] text-9xl absolute bottom-8 right-0 "> </i>
                                   <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"> </i></div>
 
-                                <div className="bg-white mx-5">
+                                <div className="bg-white mx-5 text-left">
                                   <i class="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
 
@@ -371,7 +371,8 @@ export const Registration = () => {
                                     En este momento tu perfil está siendo estudiado y te estaremos avisándo cuando tu  aprobación esté lista.
                                   </p>
                                   <div class="flex items-center justify-end mt-5 mb-5 ">
-                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
+                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">
+                                      Salir</button>
                                   </div>
 
                                 </div>

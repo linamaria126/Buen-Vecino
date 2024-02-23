@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../../styles/index.css';
+import {Context} from '../store/appContext.js';
 import Pagination from './pagination.jsx';
 
 
 
 
 const Aprobaciones_usuario = () => {
+    const {store, actions } = useContext(Context);
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5
-    const usersApprovals = [
-        { id: 1, nombre: 'Mark', apellido: 'Otto', correo: 'mark.otto@hotmail.com', apartamento: 102, },
-        { id: 2, nombre: 'John', apellido: 'Doe', correo: 'john.doe@example.com', apartamento: 103, },
-        { id: 3, nombre: 'Jane', apellido: 'Doe', correo: 'jane.doe@example.com', apartamento: 104, },
-        { id: 4, nombre: 'Alice', apellido: 'Smith', correo: 'alice.smith@example.com', apartamento: 105, },
-        { id: 5, nombre: 'Bob', apellido: 'Johnson', correo: 'bob.johnson@example.com', apartamento: 106, },
-        { id: 6, nombre: 'Alexa', apellido: 'Otto', correo: 'mark.otto@hotmail.com', apartamento: 102, },
-        { id: 7, nombre: 'John2', apellido: 'Doe', correo: 'john.doe@example.com', apartamento: 103, },
-        { id: 8, nombre: 'Jane2', apellido: 'Doe', correo: 'jane.doe@example.com', apartamento: 104, },
-        { id: 9, nombre: 'Alice2', apellido: 'Smith', correo: 'alice.smith@example.com', apartamento: 105, },
-        { id: 5, nombre: 'Bob2', apellido: 'Johnson', correo: 'bob.johnson@example.com', apartamento: 106, },
 
-    ];
-
-    const totalItems = usersApprovals.length;
+    const totalItems = allResidents.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = usersApprovals.slice(indexOfFirstItem, indexOfLastItem);
+    const currentAllResidents = allResidents.slice(indexOfFirstItem, indexOfLastItem);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -53,8 +44,10 @@ const Aprobaciones_usuario = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentItems.map((item, index) => (
-                                        <tr key={index} className="border transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-[#9890D173]">
+                                    {store.currentAllResidents.map((residente)=>{
+                                        return(
+
+                                            <tr key={allResidents.id} className="border transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-[#9890D173]">
                                             <td className="whitespace-nowrap px-6 py-4 font-medium">{item.id}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{item.nombre}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{item.apellido}</td>
@@ -65,7 +58,11 @@ const Aprobaciones_usuario = () => {
 
                                             </td>
                                         </tr>
-                                    ))}
+
+
+                                        )
+                                    })}
+                                    
 
                                     <div class="relative inline-block text-left">
                                         <div>
