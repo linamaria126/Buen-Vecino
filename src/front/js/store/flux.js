@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       api: "https://symmetrical-journey-r4g6gr7g7p9p3xrv9-3001.app.github.dev/api/",
       publicaciones: [],
+      allResidents: []
     },
     actions: {
       addPublicacion: async (publicando) => {
@@ -28,6 +29,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(publicaciones)
         console.log(allPosts)
       },
+
+
+      getAllResidents: async () => {
+        const response = await fetch(process.env.BACKEND_URL + "api/get/<int:unidad_residencial_id")
+        const data = await response.json()
+        setStore({allResidents : data.residente})
+      
+      }
     },
    
   };

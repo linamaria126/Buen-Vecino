@@ -6,7 +6,7 @@ from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publi
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token
+
 
 api = Blueprint('api', __name__)
 
@@ -178,15 +178,28 @@ def create_resident():
     
     
     
-@api.route("/login")
+#@api.route("/login")
     
-@api.route('/get/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user=Residente.query.filter_by(id=user_id).one_or_none()
+@api.route('/get/<int:residente_id>', methods=['GET'])
+def get_resident(residente_id):
+    user=Residente.query.filter_by(id=residente_id).one_or_none()
     
     if user is None:
         return jsonify({'Error' : 'user not found'}), 404
-    return jsonify ({'user': user.serialize})
+    
+    return jsonify ({'user': user.serialize()})
+
+@api.route('/get/<int:unidad_residencial_id>', methods=['GET'])
+def get_all_residents(unidad_residencial_id):
+    all_residents=Residente.query.filter_by(unidad_residencial_id=unidad_residencial_id).all()
+    if all_residents is None:
+        return jsonify({'Error' : 'user not found'}), 404
+    
+    serialized_residente = [resident.serialize() for resident in all_residents]
+    return jsonify({'users': serialized_residente})
+    
+
+
 
     
 
