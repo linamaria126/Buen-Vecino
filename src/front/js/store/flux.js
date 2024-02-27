@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      api: "https://symmetrical-journey-r4g6gr7g7p9p3xrv9-3001.app.github.dev/api/",
+      api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
       publicaciones: [],
       allResidents: []
     },

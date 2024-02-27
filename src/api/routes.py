@@ -246,6 +246,29 @@ def get_all_residents(unidad_residencial_id):
     return jsonify({'users': serialized_residente})
     
 
+@api.route("/apartamento", methods=["POST"])
+def create_apto():
+    body=request.json
+    torre=body.get("torre", None)
+    num_apto=body.get("num_apto", None)
+    num_habitantes=body.get("num_habitantes", None)
+    unidad_residencial_id=body.get('unidad_residencial_id', None)
+
+    if torre is None or num_apto is None:
+        return jsonify({
+            "error":"el campo es requerido para crear apartamento"
+        }), 400
+    new_apartament = Apartamento(torre=torre, num_apto=num_apto, num_habitantes=num_habitantes, unidad_residencial_id=unidad_residencial_id)
+
+    db.session.add(new_apartament)
+
+    try:
+        db.session.commit()
+        return 'Apto created'
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return 'ha ocurrido un error', 500
 
 
     

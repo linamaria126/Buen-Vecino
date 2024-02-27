@@ -65,14 +65,13 @@ const ModalBoard = () => {
                                 <button className="mt-4 bg-[#796FC3FF] text-white rounded-full hover:bg-[#554e88] p-2" onClick={() => setModalClose(false)}>
                                     Close modal
                                 </button>
-                                <button className="mt-4 bg-[#6BC1E2FF] text-white rounded-full hover:bg-[#60acca] p-2" type="submit">
+                                <button className="mt-4 bg-[#6BC1E2FF] text-white rounded-full hover:bg-[#60acca] p-2" type="submit" >
                                     Publicar
                                 </button>
                             </div>
                         </form>
                     </div>)}
             </div>
-
         </div>
     );
 };
