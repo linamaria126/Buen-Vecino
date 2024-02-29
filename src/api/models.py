@@ -64,6 +64,7 @@ class Residente(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable = False)
     is_active = db.Column(db.Boolean, nullable = False)
+    estado = db.Column(db.String(80), nullable = True)
     reservas = db.relationship('Reservas', backref='residente')
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
@@ -82,7 +83,8 @@ class Residente(db.Model):
             "is_active": self.is_active,
             #"publicaciones": self.publicaciones,
             "unidad_residencial_id": self.unidad_residencial_id,
-            "apartamento_id": self.apartamento_id
+            "apartamento_id": self.apartamento_id,
+            "estado": self.estado
             
         }
     
@@ -190,3 +192,4 @@ class Publicaciones(db.Model):
             "creacion": self.creacion,
             # "residente_id": self.residente_id
         }
+        
