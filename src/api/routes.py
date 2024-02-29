@@ -6,14 +6,17 @@ from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publi
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-#from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import create_access_token
 from datetime import datetime
 
 
 api = Blueprint('api', __name__)
 
+
+
 # Allow CORS requests to this API
 CORS(api)
+
 
 
 @api.route('/registration', methods=['POST'])
@@ -33,6 +36,8 @@ def create_unit():
     cedula=body.get('cedula', None)
     email=body.get('email', None)
     password=body.get('password', None)
+
+    
 
     if nombre_unidad is None:
         return jsonify({
@@ -84,7 +89,7 @@ def create_unit():
     db.session.add(new_user)
     try:
         db.session.commit()
-        return 'Unit created'
+        return jsonify({'created': True, 'nombre_unidad': nombre_unidad}), 200
     except Exception as error:
         db.session.rollback()
         print(error)
@@ -176,7 +181,10 @@ def create_resident():
             "error": "El tipo de Residente es requerido para crear el usuario"
         }), 400
     
-    # aquí debo hacer un ciclo, según me dijo Octavio, pero no entiendo cual sería la función de ello.
+    if tipo !="inquilino" and tipo !="propietario" and tipo!="administrador":
+        return jsonify({
+            "error":"Tipo de residente no existe"
+        })
     
     elif nombres is None:
         return jsonify({
@@ -207,7 +215,7 @@ def create_resident():
 
     hashed_resident_passwords = generate_password_hash(password)
     new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular,
-                          cedula=cedula, email=email,password=hashed_resident_passwords, is_active=False,
+                          cedula=cedula, email=email,password=hashed_resident_passwords, is_active=False, estado="Pendiente",
                           unidad_residencial_id=unidad_residencial_id)
     new_vehicle = Vehiculos(marca=marca_vehiculo, modelo=modelo_vehiculo, placa=placa_vehiculo, color=color_vehiculo)
     new_pet = Mascotas(tipo=pet_tipo, raza=raza, nombre=pet_nombre)
@@ -225,7 +233,7 @@ def create_resident():
     
     
     
-#@api.route("/login")
+
     
 @api.route('/get/<int:residente_id>', methods=['GET'])
 def get_resident(residente_id):
@@ -247,6 +255,49 @@ def get_all_residents(unidad_residencial_id):
     
 
 
+@api.route("/login", methods=["POST"])
+def user_login():
+    body=request.json
+    email=body.get("email", None)
+    password=body.get("password", None)
 
+    if email is None or password is None:
+        return jsonify({"error":"Email y password es requerido"}), 400
     
+    user = Residente.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    
+    password_match= check_password_hash(user.password, password)
+    if not password_match:
+        return jsonify({"error":"password o usuario incorrecto"}), 401 
+    
+    token=create_access_token(identity=email)
+    
+    return jsonify({"user":user.serialize(), "token":token})
 
+
+@api.route("/apartamento", methods=["POST"])
+def create_apto():
+    body=request.json
+    torre=body.get("torre", None)
+    num_apto=body.get("num_apto", None)
+    num_habitantes=body.get("num_habitantes", None)
+    unidad_residencial_id=body.get('unidad_residencial_id', None)
+
+    if torre is None or num_apto is None:
+        return jsonify({
+            "error":"el campo es requerido para crear apartamento"
+        }), 400
+    new_apartament = Apartamento(torre=torre, num_apto=num_apto, num_habitantes=num_habitantes, unidad_residencial_id=unidad_residencial_id)
+
+    db.session.add(new_apartament)
+
+    try:
+        db.session.commit()
+        return 'Apto created'
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return 'ha ocurrido un error', 500
+    

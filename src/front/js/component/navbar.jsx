@@ -28,7 +28,7 @@ const Navbar = () => {
             <a href="#caracteristicas" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4 font-body">
               Características
             </a>
-            <a href="#responsive-header"><Link to={'/pages/Login'} button className="bg-[#796FC3FF] mt-3 lg:inline-block lg:mt-0  text-white-600 hover:bg-[#796FC3FF] text-white font-body py-2 px-4 rounded-full ms-5">
+            <a href="#responsive-header"><Link to={'/login'} button className="bg-[#796FC3FF] mt-3 lg:inline-block lg:mt-0  text-white-600 hover:bg-[#796FC3FF] text-white font-body py-2 px-4 rounded-full ms-5">
               Iniciar sesión</Link></a>
           </div>
           <div>
