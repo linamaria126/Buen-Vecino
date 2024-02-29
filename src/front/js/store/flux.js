@@ -1,12 +1,14 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      api: "https://symmetrical-journey-r4g6gr7g7p9p3xrv9-3001.app.github.dev/api/",
+      api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
       apiUrl: "http://127.0.0.1:3001/api",
       publicaciones: [],
       allResidents: [],
       nameUnitCreated: null,
-      users: []
+      users: [],
+      reservaciones:[]
     },
     actions: {
       addUnit: async (newUnitUser) => {
@@ -84,6 +86,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         const allPosts = await response.json();
         setStore({ publicaciones: allPosts });
         console.log(allPosts);
+      },
+
+      addReservacion: async () => {
+        const store = getStore()
+        const response = await fetch(store.api + 'reservaciones', {
+          method: "POST",
+          body: JSON.stringify({descripcion: reservacion.descripcion,
+          personas: parseInt(reservacion.personas),
+          inicio: reservacion.fecha}),
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        if(response.ok){
+          console.log(await 'todo correcto')
+        }
       },
 
 
