@@ -246,6 +246,8 @@ def get_all_residents(unidad_residencial_id):
     return jsonify({'users': serialized_residente})
     
 
+#endpoint get_residents
+
 
 
     

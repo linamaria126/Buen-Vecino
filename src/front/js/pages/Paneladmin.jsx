@@ -46,14 +46,15 @@ const Paneladmin = () => {
                         <h1>Buen vecino</h1>
                         <h2 className="text-[#323842FF]">Panel de Administrador</h2>
                     </div>
-                    <div className="bg-[#D0EBF699] absolute inset-y-0 right-0 rounded-full w-96 h-96"></div>
+                    <div className="bg-[#D0EBF699] absolute rounded-full inset-y-0 right-0 w-96 h-96"></div>
                 </div>
-                <div className="flex justify-center items-center my-8">
-                    <div>
-
+                <div className="flex flex-col justify-between m-8">
+                    <div className="m-auto">
+                        <input type="search" className="border-2" placeholder="buscar" />
+                        <button className="bg-blue-500 text-white px-4 py-2">category</button>
                     </div>
-                    <div className="border-2 border-inherit">
-                        <table class=" table-auto">
+                    <div className="flex justify-center">
+                        <table class=" table-auto border-2">
                             <thead>
                                 <tr className=" bg-gray-100">
                                     <th className="px-4 py-2">Apto.</th>
@@ -123,10 +124,11 @@ const Paneladmin = () => {
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
+
                 </div>
             </div>
+
         </>
     )
 }
