@@ -206,8 +206,8 @@ def create_resident():
         }), 400
 
     hashed_resident_passwords = generate_password_hash(password)
-    new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular,
-                          cedula=cedula, email=email,password=hashed_resident_passwords, is_active=False,
+    new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular,is_active= False,estado= "Pendiente",
+                          cedula=cedula, email=email,password=hashed_resident_passwords,
                           unidad_residencial_id=unidad_residencial_id)
     new_vehicle = Vehiculos(marca=marca_vehiculo, modelo=modelo_vehiculo, placa=placa_vehiculo, color=color_vehiculo)
     new_pet = Mascotas(tipo=pet_tipo, raza=raza, nombre=pet_nombre)
@@ -236,8 +236,9 @@ def get_resident(residente_id):
     
     return jsonify ({'user': user.serialize()})
 
-@api.route('/get/<int:unidad_residencial_id>', methods=['GET'])
+@api.route('/get/users/<int:unidad_residencial_id>', methods=['GET'])
 def get_all_residents(unidad_residencial_id):
+    print(unidad_residencial_id)
     all_residents=Residente.query.filter_by(unidad_residencial_id=unidad_residencial_id).all()
     if all_residents is None:
         return jsonify({'Error' : 'user not found'}), 404
@@ -245,8 +246,60 @@ def get_all_residents(unidad_residencial_id):
     serialized_residente = [resident.serialize() for resident in all_residents]
     return jsonify({'users': serialized_residente})
     
+    
+    
+    
+@api.route('/actualizarestado/<int:residente_id>' , methods =['PUT'])
+def update_residente(residente_id):
+    user= Residente.query.get(residente_id)
+    if not user:
+        return jsonify({'Error': 'Residente no encontrado'}), 404
+    
+    data= request.get_json()
+    if 'estado' in data:
+        user.estado = data.get('estado')
+        
+        try:
+            db.session.commit()
+            return jsonify({'mensaje': 'Usuario actualizado exitosamente', 'user': user.serialize()}), 200
+        except Exception as error:
+            db.session.rollback()
+            return 'Error al actualizar el estado del residente', 500
+        
+
+@api.route('/estadopendiente/<int:unidad_residencial_id>/<string:estado>' , methods =["GET"])
+def get_residents_by_status(unidad_residencial_id, estado):
+    residents_by_status=Residente.query.filter_by(unidad_residencial_id=unidad_residencial_id, estado=estado).all()
+    if residents_by_status is None:
+        return jsonify({'Error' : 'user not found'}), 404
+    
+    serialized_residente = [resident.serialize() for resident in residents_by_status]
+    return jsonify({'users': serialized_residente})
 
 
 
+@api.route("/apartamento", methods=["POST"])
+def create_apto():
+    body=request.json
+    torre=body.get("torre", None)
+    num_apto=body.get("num_apto", None)
+    num_habitantes=body.get("num_habitantes", None)
+    unidad_residencial_id=body.get('unidad_residencial_id', None)
+
+    if torre is None or num_apto is None:
+        return jsonify({
+            "error":"el campo es requerido para crear apartamento"
+        }), 400
+    new_apartament = Apartamento(torre=torre, num_apto=num_apto, num_habitantes=num_habitantes, unidad_residencial_id=unidad_residencial_id)
+
+    db.session.add(new_apartament)
+
+    try:
+        db.session.commit()
+        return 'Apto created'
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return 'ha ocurrido un error', 500
     
 
