@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones, Mascotas, Apartamento
+from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones, Mascotas, Apartamento, Reservas
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -128,6 +128,36 @@ def create_post():
     except Exception as error:
         db.session.rollback()
         return 'Hubo un problema con tu publicacion'
+    
+
+@api.route('reservaciones/', methods=['POST'])
+def create_reservacion():
+    body = request.json
+    descripcion = body.get('descripcion', None)
+    personas = body.get('personas', None)
+    fecha = body.get('inicio', None)
+
+    if descripcion is None :
+        return jsonify({'error': 'Se necesita una descripcion de la reserva'}), 404
+    
+    if personas is None :
+        return jsonify({'error': 'numero de personas es necesario especificar'}), 404
+    
+    if fecha is None :
+        return jsonify({'error': 'Se necesita una fecha para la reserva'}), 404
+    
+    new_reservacion = Reservas(descripcion=descripcion, personas=personas, inicio=fecha)
+
+    db.session.add(new_reservacion)
+    try:
+        db.sesion.commit()
+        return 'reserva enviada'
+    
+    except Exception as error:
+        db.session.rollback()
+        return 'Hubo un problema con tu reservacion'
+    
+
     
 
 @api.route('/userRegister/', methods=['POST'])

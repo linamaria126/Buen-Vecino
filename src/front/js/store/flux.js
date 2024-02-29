@@ -1,9 +1,11 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
       publicaciones: [],
-      allResidents: []
+      allResidents: [],
+      reservaciones:[]
     },
     actions: {
       addPublicacion: async (publicando) => {
@@ -29,6 +31,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         const allPosts = await response.json();
         setStore({ publicaciones: allPosts });
         console.log(allPosts)
+      },
+
+      addReservacion: async () => {
+        const store = getStore()
+        const response = await fetch(store.api + 'reservaciones', {
+          method: "POST",
+          body: JSON.stringify({descripcion: reservacion.descripcion,
+          personas: parseInt(reservacion.personas),
+          inicio: reservacion.fecha}),
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        if(response.ok){
+          console.log(await 'todo correcto')
+        }
       },
 
 

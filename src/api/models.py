@@ -161,7 +161,9 @@ class Reservas(db.Model):
     __tablename__ = "reservas"
     id = db.Column(db.Integer, primary_key=True)
     inicio = db.Column(db.DateTime, nullable= False)
-    final = db.Column(db.DateTime, nullable = False)
+    # final = db.Column(db.DateTime, nullable = False)
+    descripcion = db.Column(String(200), nullable = False)
+    personas = db.Column(Integer, nullable = False)
 
     residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
 
@@ -170,6 +172,8 @@ class Reservas(db.Model):
             "id": self.id,
             "inicio": self.hora_inicio,
             "final": self.hora_final,
+            "descripcion": self.descripcion,
+            "personas": self.personas,
             "residente": self.residente
         }
     
