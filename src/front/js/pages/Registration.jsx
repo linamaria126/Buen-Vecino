@@ -1,10 +1,39 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import '../../styles/index.css';
-
+import Banner from '../component/banner.jsx';
 import { Context } from "../store/appContext";
 
 export const Registration = () => {
+  const navigate = useNavigate();
+  const [newUnitUser, setNewUnitUser] = useState({
+    nombre_unidad : "",
+    nit : "",
+    direccion : "",
+    telefono : "",
+    cant_apto : "",
+    cant_torres: "",
+    nombres_admin : "",
+    apellidos: "",
+    celular : "",
+    cedula : "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e)=> {
+    setNewUnitUser({ ...newUnitUser, [e.target.name]: e.target.value });
+    console.log(newUnitUser)
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    actions.addUnit(newUnitUser);
+    handleOpenModalSubmit();
+    
+  };
+
+
   const { store, actions } = useContext(Context);
   const [modalOpen, setModalOpen] = useState(false);
   const [showDeclineMessage, setShowDeclineMessage] = useState(false);
@@ -19,6 +48,7 @@ export const Registration = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
     setShowDeclineMessage(false);
+
   };
 
   const handleDecline = () => {
@@ -33,20 +63,18 @@ export const Registration = () => {
 
   const handleCloseModalSubmit = () => {
     setModalOpenSubmit(false);
+    navigate("/");
   };
 
 
 
   return (
-    <div className="container pt-5 w-auto p-10 m-10 bg-gray-50">
+
+    <div className="w-auto bg-gray-50">
       <div className="min-h-screen flex flex-col">
-        <header className="bg-[#F3F4F6FF] shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900">
-              LOGO
-            </h1>
-          </div>
-        </header>
+        <div>
+          <Banner />
+        </div>
         <main className="flex-grow">
           <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
@@ -58,7 +86,7 @@ export const Registration = () => {
                   <div className="mt-5">
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm">
                       <div className="py-3">
-                        <i class="fa-solid fa-circle-info inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-circle-info inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Información General
                         </h4>
@@ -73,6 +101,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="Unidad Res. Remansos del Lili"
+                            name="nombre_unidad"
+                            onChange={handleChange}
+                            value={newUnitUser.nombre_unidad}
                           />
                         </div>
                         <div>
@@ -83,6 +114,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="900.232.500.120"
+                            name="nit"
+                            onChange={handleChange}
+                            value={newUnitUser.nit}
                           />
                         </div>
                         <div>
@@ -93,6 +127,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="Cra 102 # 34-133"
+                            name="direccion"
+                            onChange={handleChange}
+                            value={newUnitUser.direccion}
                           />
                         </div>
                         <div>
@@ -103,6 +140,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="602-400-502-600"
+                            name="telefono"
+                            onChange={handleChange}
+                            value={newUnitUser.telefono}
                           />
                         </div>
                         <div>
@@ -113,6 +153,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="200"
+                            name="cant_apto"
+                            onChange={handleChange}
+                            value={newUnitUser.cant_apto}
                           />
                         </div>
                         <div>
@@ -123,13 +166,16 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="6"
+                            name="cant_torres"
+                            onChange={handleChange}
+                            value={newUnitUser.cant_torres}
                           />
                         </div>
                       </div>
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
                       <div className="py-3">
-                        <i class="fa-solid fa-user inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-user inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Datos representante legal
                         </h4>
@@ -143,6 +189,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="Nombres"
+                            name="nombres_admin"
+                            onChange={handleChange}
+                            value={newUnitUser.nombres_admin}
                           />
                         </div>
                         <div>
@@ -153,6 +202,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="Apellidos"
+                            name="apellidos"
+                            onChange={handleChange}
+                            value={newUnitUser.apellidos}
                           />
                         </div>
                         <div>
@@ -163,6 +215,9 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="3187549865"
+                            name="celular"
+                            onChange={handleChange}
+                            value={newUnitUser.celular}
                           />
                         </div>
                         <div>
@@ -173,13 +228,16 @@ export const Registration = () => {
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="1232584741"
+                            name="cedula"
+                            onChange={handleChange}
+                            value={newUnitUser.cedula}
                           />
                         </div>
                       </div>
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
                       <div className="py-3">
-                        <i class="fa-solid fa-lock inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-lock inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Datos de ingreso a la plataforma
                         </h4>
@@ -194,6 +252,9 @@ export const Registration = () => {
                             type="email"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="admin_unidad_residencial@unidad.com"
+                            name="email"
+                            onChange={handleChange}
+                            value={newUnitUser.email}
                           />
                         </div>
                         <div>
@@ -204,6 +265,9 @@ export const Registration = () => {
                             type="password"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="********"
+                            name="password"
+                            onChange={handleChange}
+                            value={newUnitUser.password}
                           />
                         </div>
                         <div>
@@ -214,6 +278,9 @@ export const Registration = () => {
                             type="password"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="********"
+                            name="password"
+                            onChange={handleChange}
+                            value={newUnitUser.password}
                           />
                         </div>
                       </div>
@@ -245,7 +312,7 @@ export const Registration = () => {
                           <div className="bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
 
                             <div className="text-4xl font-title font-bold mb-2 py-3 px-5 bg-slate-200">
-                              <h1 className="text-black">Politica de Datos Personales</h1>
+                              <h1 className="text-black">Politica de Tratamiento de datos - Unidad Residencial</h1>
                             </div>
                             <div className="px-5 text-black relative z-10">
                               <i className="fas fa-circle text-[#9890D173] text-8xl absolute right-5 top-5"> </i>
@@ -306,9 +373,9 @@ export const Registration = () => {
 
 
 
-                              <div class="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                <button onClick={handleCloseModal} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Aceptar</button>
-                                <button onClick={handleDecline} data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-[#5549AFFF] rounded-lg border border-gray-200 hover:bg-[#665BBAFF] hover:text-white focus:z-10 focus:ring-4 focus:ring-[#5549AFFF] dark:focus:ring-[#5549AFFF] dark:bg-[#5549AFFF] dark:text-white">Rechazar</button>
+                              <div className="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                <button onClick={handleCloseModal} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Aceptar</button>
+                                <button onClick={handleDecline} data-modal-hide="default-modal" type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-[#5549AFFF] rounded-lg border border-gray-200 hover:bg-[#665BBAFF] hover:text-white focus:z-10 focus:ring-4 focus:ring-[#5549AFFF] dark:focus:ring-[#5549AFFF] dark:bg-[#5549AFFF] dark:text-white">Rechazar</button>
                               </div>
 
                             </div>
@@ -321,7 +388,7 @@ export const Registration = () => {
                             <div className="bg-white rounded-lg border border-gray-200 shadow-md">
                               <div className="flex justify-between items-center bg-[#9890D1FF]">
                                 <h5 className="mx-3 my-2">Notificación</h5>
-                                <button onClick={() => setShowDeclineMessage(false)} className="text-sm text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i class="fa-solid fa-xmark mx-3 "></i></button>
+                                <button onClick={() => setShowDeclineMessage(false)} className="text-sm text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i className="fa-solid fa-xmark mx-3 "></i></button>
                               </div>
                               <div>
                                 <p className="text-black font-old font-body mx-3 my-2">Lo sentimos, para formar parte de la plataforma, es necesario aceptar nuestra política de privacidad.</p>
@@ -343,7 +410,7 @@ export const Registration = () => {
                       <button className="bg-[#F3F4F6FF] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Cancel
                       </button>
-                      <button onClick={handleOpenModalSubmit} className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <button onClick={handleSubmit} className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Submit
                         {modalOpenSubmit && (
 
@@ -352,26 +419,26 @@ export const Registration = () => {
 
                               <div className="grid grid-cols-2 ">
                                 <div className="col-span-2 bg-slate-200">
-                                  <h5 className="mx-4 my-2 font-title font-bold text-black text-left">Tu suscripción está en proceso</h5></div>
+                                  <h5 className="mx-4 my-2 font-title font-bold text-black text-left text-xl">Tu Unidad Residencial ha sido creada 🚀</h5></div>
 
                                 <div className="bg-[#5549AF38] flex text left items-center relative ">
-                                  <h3 className="font-body text-black text-4xl mx-4">Felicitaciones!</h3>
+                                  <h3 className="font-body text-black text-4xl mx-4 pl-10">Felicitaciones! 🎉</h3>
                                   <i className="fa-solid fa-caret-up text-[#D0EBF6FF] text-9xl absolute bottom-8 right-0 "> </i>
                                   <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"> </i></div>
 
                                 <div className="bg-white mx-5 text-left">
-                                  <i class="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
+                                  <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
 
                                   <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">Información recibida</h5>
-                                  <p className='font-body text-black mb-3'>
-                                    Hemos recibido tu información
+                                  <p className='font-body text-black mb-3 text-lg'>
+                                  Acabas de recibir un correo electrónico  ✉️ con el link 🔗 que puedes enviar a los residentes de tu Unidad Residencial!!!
                                   </p>
-                                  <p className="font-body text-black">
-                                    En este momento tu perfil está siendo estudiado y te estaremos avisándo cuando tu  aprobación esté lista.
+                                  <p className="font-body text-slate-700">
+                                    Ya puedes empezar a comunicarle a toda la comunidad para que creen sus perfiles y empiecen a interactuar 🚀
                                   </p>
-                                  <div class="flex items-center justify-end mt-5 mb-5 ">
-                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">
+                                  <div className="flex items-center justify-end mt-5 mb-5 ">
+                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">
                                       Salir</button>
                                   </div>
 
