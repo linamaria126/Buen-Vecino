@@ -16,6 +16,7 @@ import Paneladmin from "./pages/Paneladmin.jsx";
 import Modal from "./pages/Modal.jsx";
 import ModalgenericP from "./pages/ModalgenericP.jsx";
 import Aprobaciones from "./pages/Aprobaciones.jsx";
+import Reservaciones from "./pages/Reservas.jsx";
 
 //create your first component
 const Layout = () => {
@@ -35,12 +36,13 @@ const Layout = () => {
             <Route element={<Homeuser />} path="/homeuser" />
             <Route element={<Homeadmin />} path="/homeadmin" />
             <Route element={<Registration />} path="/registration" />
-            <Route element={<UserRegister />} path="/userRegister" />
+            <Route element={<UserRegister />} path="/userRegister/:uniId" />
             <Route element={<Login />} path="/login" />
             <Route element={<ModalApproval />} path="/modalApprobal" />
             <Route element={<Modal />} path="/modal" />
             <Route element={<ModalgenericP />} path="/modalgeneric" />
             <Route element={<Aprobaciones />} path="/aprobaciones" />
+            <Route element={<Reservaciones />} path="/reservas" />
             <Route element={<Board />} path="/board" />
             <Route element={<Paneladmin/>} path="/paneladmin"/>
             <Route element={<Single />} path="/single/:theid" />

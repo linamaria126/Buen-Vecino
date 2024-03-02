@@ -45,7 +45,7 @@ const Paneladmin = () => {
                     <div className="relative">
                         <button onClick={toggleDropdown} className="border-solid border-gray-400 border-[1px] p-2 rounded flex justify-start items-center gap-4">
                             Notificaciones
-                            <i class="fa-solid fa-angle-down"></i>
+                            <i className="fa-solid fa-angle-down"></i>
                         </button>
                         {isOpen && (
                             <div className="absolute top-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
@@ -75,7 +75,7 @@ const Paneladmin = () => {
                         <button className="text-black px-4 py-2">Filtrar</button>
                     </div>
                     <div className="flex justify-center">
-                        <table class=" table-auto border-2">
+                        <table className=" table-auto border-2">
                             <thead>
                                 <tr className=" bg-gray-100">
                                     <th className="px-4 py-2">Apto.</th>

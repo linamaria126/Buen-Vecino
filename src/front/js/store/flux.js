@@ -2,16 +2,25 @@ const API_URL=process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
+      apiUrl: "http://localhost:3001/api",
       publicaciones: [],
       allResidents: [],
       nameUnitCreated: null,
       users: [],
       unis:[],
+      reservaciones:[],
+      token: localStorage.getItem("token") || ""
     },
     actions: {
       addUnit: async (newUnitUser) => {
         try {
-          console.log(newUnitUser);
+          if(!newUnitUser.email || !newUnitUser.password || !newUnitUser.nombre_unidad || !newUnitUser.nit 
+            || !newUnitUser.direccion || !newUnitUser.telefono || !newUnitUser.nombres_admin || !newUnitUser.apellidos 
+            || !newUnitUser.celular || !newUnitUser.cedula){
+            alert("Porfavor, Completa todos los campos") 
+            return(false);
+          }
           const store = getStore();
           const response = await fetch(API_URL + "/registration", {
             method: "POST",
@@ -22,6 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           let data = await response.json();
           setStore({...store, nameUnitCreated: data.nombre_unidad});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -29,7 +39,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addUser: async (newUser) => {
         try {
-          console.log(newUser);
+          if(!newUser.torre || !newUser.num_apto || !newUser.tipo || !newUser.nombres || !newUser.apellidos || !newUser.celular
+            || !newUser.cedula || !newUser.email || !newUser.password){
+              alert("Porfavor, Completa todos los campos") 
+            return(false);
+            }
           const store = getStore();
           const response = await fetch(API_URL + "/userRegister", {
             method: "POST",
@@ -38,8 +52,10 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
             },
           });
+          console.log(response);
           let data = await response.json();
           setStore({...store, nameUserCreated: data.nombres});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -55,8 +71,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         })
         const data = await response.json();
-        setStore({user:data})
-        localStorage.setItem("token", data.token)
+        if (response.ok) 
+        {
+          setStore({user:data, token:data.token})
+          localStorage.setItem("token", data.token)
+          return true;
+        }
+        else{
+          return false;
+        }
+        
       },
 
       addPublicacion: async (publicando) => {
@@ -86,10 +110,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(allPosts);
       },
 
+      addReservaciones: async () => {
+        const store = getStore()
+        const response = await fetch(store.api + 'reservas', {
+          method: "POST",
+          body: JSON.stringify({descripcion: reservacion.descripcion,
+          personas: parseInt(reservacion.personas),
+          inicio: reservacion.fecha}),
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        if(response.ok){
+          console.log(await 'todo correcto')
+        }
+      },
+
 
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
-        const store=getStore();
-        const response = await fetch(`${API_URL}/estadopendiente/${unidad_residencial_id}/${estado}`)
+        // const store=getStore();
+        // const response = await fetch(`${API_URL}/estadopendiente/${unidad_residencial_id}/${estado}`)
+        const store= getStore();
+        const response = await fetch (`http://127.0.0.1:3001/api/estadopendiente/${unidad_residencial_id}/${estado}`)
         const data = await response.json()
         setStore({users : data.users})
         console.log(data.users)
@@ -109,12 +151,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       putUpdatedStatus: async (residente_id, selectedStatus) => {
         const store=getStore();
-        const response =await fetch (`${API_URL}/actualizarestado/${residente_id}` , 
+        // const response =await fetch (`${API_URL}/actualizarestado/${residente_id}` , 
+        const response =await fetch (`http://127.0.0.1:3001/api/actualizarestado/${residente_id}`,
         {
           method: 'PUT',
           body: JSON.stringify({estado : selectedStatus}),
           headers:{
             "Content-Type": "application/json",
+            "authorization" : `Bearer ${store.token}`
 
           }
          

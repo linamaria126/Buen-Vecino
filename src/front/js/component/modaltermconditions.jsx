@@ -95,9 +95,9 @@ const modaltermconditions = () => {
 
 
 
-                        <div class="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button onClick={handleCloseModal} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Aceptar</button>
-                            <button onClick={handleDecline} data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-[#5549AFFF] rounded-lg border border-gray-200 hover:bg-[#665BBAFF] hover:text-white focus:z-10 focus:ring-4 focus:ring-[#5549AFFF] dark:focus:ring-[#5549AFFF] dark:bg-[#5549AFFF] dark:text-white">Rechazar</button>
+                        <div className="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            <button onClick={handleCloseModal} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Aceptar</button>
+                            <button onClick={handleDecline} data-modal-hide="default-modal" type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-[#5549AFFF] rounded-lg border border-gray-200 hover:bg-[#665BBAFF] hover:text-white focus:z-10 focus:ring-4 focus:ring-[#5549AFFF] dark:focus:ring-[#5549AFFF] dark:bg-[#5549AFFF] dark:text-white">Rechazar</button>
                         </div>
 
                     </div>
@@ -110,7 +110,7 @@ const modaltermconditions = () => {
                     <div className="bg-white rounded-lg border border-gray-200 shadow-md">
                         <div className="flex justify-between items-center bg-[#9890D1FF]">
                             <h5 className="mx-3 my-2">Notificación</h5>
-                            <button onClick={() => setShowDeclineMessage(false)} className="text-sm text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i class="fa-solid fa-xmark mx-3 "></i></button>
+                            <button onClick={() => setShowDeclineMessage(false)} className="text-sm text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i className="fa-solid fa-xmark mx-3 "></i></button>
                         </div>
                         <div>
                             <p className="text-black font-old font-body mx-3 my-2">Lo sentimos, para formar parte de la plataforma, es necesario aceptar nuestra política de privacidad.</p>
