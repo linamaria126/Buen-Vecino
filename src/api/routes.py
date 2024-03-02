@@ -176,6 +176,36 @@ def create_reservacion():
 
     
 
+@api.route('reservaciones/', methods=['POST'])
+def create_reservacion():
+    body = request.json
+    descripcion = body.get('descripcion', None)
+    personas = body.get('personas', None)
+    fecha = body.get('inicio', None)
+
+    if descripcion is None :
+        return jsonify({'error': 'Se necesita una descripcion de la reserva'}), 404
+    
+    if personas is None :
+        return jsonify({'error': 'numero de personas es necesario especificar'}), 404
+    
+    if fecha is None :
+        return jsonify({'error': 'Se necesita una fecha para la reserva'}), 404
+    
+    new_reservacion = Reservas(descripcion=descripcion, personas=personas, inicio=fecha)
+
+    db.session.add(new_reservacion)
+    try:
+        db.sesion.commit()
+        return 'reserva enviada'
+    
+    except Exception as error:
+        db.session.rollback()
+        return 'Hubo un problema con tu reservacion'
+    
+
+    
+
 @api.route('/userRegister/', methods=['POST'])
 def create_resident():
     body=request.json
@@ -286,7 +316,7 @@ def get_resident(residente_id):
     return jsonify ({'user': user.serialize()})
 
 @api.route('/get/users/<int:unidad_residencial_id>', methods=['GET'])
-def get_all_residents(unidad_residencial_id):
+def get_all_residents_uni(unidad_residencial_id):
     print(unidad_residencial_id)
     all_residents=Residente.query.filter_by(unidad_residencial_id=unidad_residencial_id).all()
     if all_residents is None:
@@ -294,6 +324,15 @@ def get_all_residents(unidad_residencial_id):
     
     serialized_residente = [resident.serialize() for resident in all_residents]
     return jsonify({'users': serialized_residente})
+
+@api.route('/get/unis', methods=['GET'])
+def get_all_uni():
+    all_uni=Unidad_residencial.query.all()
+    if all_uni is None:
+        return jsonify({'Error' : 'user not found'}), 404
+    
+    serialized_uni = [uni.serialize() for uni in all_uni]
+    return jsonify({'unis': serialized_uni})
     
     
     
