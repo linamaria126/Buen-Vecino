@@ -1,4 +1,3 @@
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -8,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       allResidents: [],
       nameUnitCreated: null,
       users: [],
-      reservaciones:[]
+      reservaciones: [],
     },
     actions: {
       addUnit: async (newUnitUser) => {
@@ -23,7 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           let data = await response.json();
-          setStore({...store, nameUnitCreated: data.nombre_unidad});
+          setStore({ ...store, nameUnitCreated: data.nombre_unidad });
         } catch (e) {
           console.error(e);
         }
@@ -41,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           let data = await response.json();
-          setStore({...store, nameUserCreated: data.nombres});
+          setStore({ ...store, nameUserCreated: data.nombres });
         } catch (e) {
           console.error(e);
         }
@@ -54,11 +53,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(newUser),
           headers: {
             "Content-Type": "application/json",
-          }
-        })
+          },
+        });
         const data = await response.json();
-        setStore({user:data})
-        localStorage.setItem("token", data.token)
+        setStore({ user: data });
+        localStorage.setItem("token", data.token);
       },
 
       addPublicacion: async (publicando) => {
@@ -88,47 +87,46 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(allPosts);
       },
 
-      addReservacion: async () => {
-        const store = getStore()
-        const response = await fetch(store.api + 'reservaciones', {
+      addReservacion: async (reservacion) => {
+        const store = getStore();
+        const response = await fetch(store.api + "reservas", {
           method: "POST",
-          body: JSON.stringify({descripcion: reservacion.descripcion,
-          personas: parseInt(reservacion.personas),
-          inicio: reservacion.fecha}),
+          body: JSON.stringify({
+            descripcion: reservacion.descripcion,
+            personas: parseInt(reservacion.personas),
+            inicio: reservacion.fecha,
+          }),
           headers: {
             "Content-Type": "application/json",
-          }
-        })
-        if(response.ok){
-          console.log(await 'todo correcto')
-        }
+          },
+        });
       },
 
-
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
-        const store=getStore();
-        const response = await fetch(`${store.apiURL}/estadopendiente/${unidad_residencial_id}/${estado}`)
-        const data = await response.json()
-        setStore({users : data.users})
-        console.log(data.users)
-      
-      }, 
+        const store = getStore();
+        const response = await fetch(
+          `${store.apiURL}/estadopendiente/${unidad_residencial_id}/${estado}`
+        );
+        const data = await response.json();
+        setStore({ users: data.users });
+        console.log(data.users);
+      },
 
       putUpdatedStatus: async (residente_id, selectedStatus) => {
-        const store=getStore();
-        const response =await fetch (`${store.apiURL}/actualizarestado/${residente_id}` , 
-        {
-          method: 'PUT',
-          body: JSON.stringify({estado : selectedStatus}),
-          headers:{
-            "Content-Type": "application/json",
-
+        const store = getStore();
+        const response = await fetch(
+          `${store.apiURL}/actualizarestado/${residente_id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify({ estado: selectedStatus }),
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-         
-        });
-        if (response.ok) return true
-        return false
-      }
+        );
+        if (response.ok) return true;
+        return false;
+      },
     },
   };
 };
