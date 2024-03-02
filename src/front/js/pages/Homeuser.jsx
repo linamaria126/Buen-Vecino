@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const Homeuser = () => {
+
+  
   const navigate = useNavigate()
   return (
     <>
@@ -56,22 +58,22 @@ const Homeuser = () => {
         </div>
       </div>
       <div className="flex justify-center gap-36 mt-20">
-        <article className="select-none cursor-pointer rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 shadow-xl flex justify-around flex-col w-72 h-64 bg-gray-300">
+        <article className="select-none cursor-pointer rounded-lg px-3 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 shadow-xl flex justify-around flex-col w-72 h-64 bg-gray-300">
           <div className="flex justify-center bg-#9890D1FF">
             <Handshake onClick={() => navigate("/board")} className="w-40 fill-[#9890D1FF] font-black" />
           </div>
-          <h1 className="text-2xl text-center font-bold">Board de negocios</h1>
-          <p className="text-base text-center">
-            Labore proident nisi fugiat nostrud
+          <h1 className="text-2xl text-center font-bold pb-2">Board de negocios</h1>
+          <p className="text-base text-center pb-4">
+            Ofrece y adquiere servicios en tu unidad
           </p>
         </article>
         <article className="select-none cursor-pointer rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 flex justify-around shadow-xl  flex-col w-72 h-64 bg-gray-300">
-          <div className="flex justify-center">
-            <img onClick={() => navigate("/reservation")} src={user_circle} alt="" className="w-28" />
+          <div className="flex justify-center pt-2">
+            <img onClick={() => navigate("/reservas")} src={user_circle} alt="" className="w-28" />
           </div>
-          <h1 className="text-2xl text-center font-bold">Reserva aquí</h1>
+          <h1 className="text-2xl text-center font-bold pt-3">Reserva aquí</h1>
           <p className="text-base text-center">
-            Labore proident nisi fugiat nostrud
+            Reserva tus zonas sociales en un solo click
           </p>
         </article>
       </div>

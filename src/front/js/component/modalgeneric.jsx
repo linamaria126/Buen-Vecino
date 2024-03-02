@@ -60,7 +60,7 @@ const Modalgeneric = () => {
                                 <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"> </i></div>
 
                             <div className="bg-white mx-5">
-                                <i class="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
+                                <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
 
                                 <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">Información recibida</h5>
@@ -70,8 +70,8 @@ const Modalgeneric = () => {
                                 <p className="font-body text-black">
                                     En este momento tu perfil está siendo estudiado y te estaremos avisándo cuando tu  aprobación esté lista.
                                 </p>
-                                <div class="flex items-center justify-end mt-5 mb-5 ">
-                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
+                                <div className="flex items-center justify-end mt-5 mb-5 ">
+                                    <button onClick={handleCloseModalSubmit} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
                                 </div>
 
                             </div>
@@ -103,7 +103,7 @@ const Modalgeneric = () => {
                                 <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"> </i></div>
 
                             <div className="bg-white mx-5">
-                                <i class="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
+                                <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
 
                                 <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">Hemos recibido tu información</h5>
@@ -113,8 +113,8 @@ const Modalgeneric = () => {
                                 <p className="font-body text-black">
                                     En este momento tu publicación  está siendo Revisada y te estaremos avisándo cuando se haga su respectiva aprobación.
                                 </p>
-                                <div class="flex items-center justify-end mt-5 mb-5 ">
-                                    <button onClick={handleCloseModalPublication} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
+                                <div className="flex items-center justify-end mt-5 mb-5 ">
+                                    <button onClick={handleCloseModalPublication} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
                                 </div>
 
                             </div>
@@ -152,7 +152,7 @@ const Modalgeneric = () => {
                                 <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"> </i></div>
 
                             <div className="bg-white mx-5">
-                                <i class="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
+                                <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
 
                                 <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">Información recibida</h5>
@@ -162,8 +162,8 @@ const Modalgeneric = () => {
                                 <p className="font-body text-black">
                                     En este momento tu reserva  está siendo Revisada y te estaremos avisándo cuando se haga su respectiva aprobación.
                                 </p>
-                                <div class="flex items-center justify-end mt-5 mb-5 ">
-                                    <button onClick={handleCloseModalReservation} data-modal-hide="default-modal" type="button" class="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
+                                <div className="flex items-center justify-end mt-5 mb-5 ">
+                                    <button onClick={handleCloseModalReservation} data-modal-hide="default-modal" type="button" className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white">Salir</button>
                                 </div>
 
                             </div>

@@ -1,10 +1,15 @@
 import React, { useState,  useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import Banner from '../component/banner.jsx';
 
 const userRegister = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  
+  if (params.uniId == undefined )
+    uniId = 1
+
   const [newUser, setNewUser] = useState({
     torre: "",
     num_apto: "",
@@ -21,8 +26,8 @@ const userRegister = () => {
     raza: "",
     pet_nombre: "",
     email: "",
-    password: "",
-    unidad_residencial_id: 1,
+    password: "", 
+    unidad_residencial_id: params.uniId,
   });
 
   const handleChange = (e) => {
@@ -30,10 +35,14 @@ const userRegister = () => {
     console.log(newUser);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.addUser(newUser);
-    handleOpenModalSubmit();
+    let response = await actions.addUser(newUser);
+    console.log(response);
+    if(response){
+      handleOpenModalSubmit();
+    }
+  
   };
 
   const { store, actions } = useContext(Context);
@@ -65,7 +74,7 @@ const userRegister = () => {
 
   return (
     <div className="w-auto bg-gray-50">
-      <div className="min-h-screen flex flex-col">
+      <form className="min-h-screen flex flex-col">
         <div>
           <Banner />
         </div>
@@ -80,7 +89,7 @@ const userRegister = () => {
                   <div className="mt-5">
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm">
                       <div className="py-3">
-                        <i class="fa-solid fa-circle-info inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-circle-info inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Información General
                         </h4>
@@ -113,8 +122,8 @@ const userRegister = () => {
                             value={newUser.torre}
                           />
                         </div>
-                        <div className="flex flex-col">
-                          <p className="block text-sm font-medium text-gray-700 px-5 fw-bold">
+                        <div className="flex flex-col pl-10">
+                          <p className="block text-lg font-medium text-gray-700 px-5 fw-bold">
                             Tipo de residente
                           </p>
                           <div className="flex flex-row">
@@ -126,11 +135,11 @@ const userRegister = () => {
                               onChange={handleChange}
                               
                             />
-                            <label for="tipo" className="px-2">
+                            <label for="tipo" className="px-2 pt-2">
                               Inquilino
                             </label>
                           </div>
-                          <div fclassName="flex flex-row">
+                          <div className="flex flex-row">
                             <input
                               type="radio"
                               name="tipo"
@@ -169,7 +178,7 @@ const userRegister = () => {
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
                       <div className="py-3">
-                        <i class="fa-solid fa-user inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-user inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Datos del Residente
                         </h4>
@@ -232,118 +241,7 @@ const userRegister = () => {
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
                       <div className="py-3">
-                        <i class="fa-solid fa-car inline text-lg pr-3"></i>
-                        <h4 className="inline fw-bold text-lg">
-                          Datos del Vehículo
-                        </h4>
-                      </div>
-                      <div className="grid grid-cols-2 gap-6 mt-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Marca
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Marca"
-                            name="marca_vehiculo"
-                            onChange={handleChange}
-                            value={newUser.marca_vehiculo}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Modelo
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Modelo"
-                            name="modelo_vehiculo"
-                            onChange={handleChange}
-                            value={newUser.modelo_vehiculo}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Placa
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="placa"
-                            name="placa_vehiculo"
-                            onChange={handleChange}
-                            value={newUser.placa_vehiculo}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Color
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="color"
-                            name="color_vehiculo"
-                            onChange={handleChange}
-                            value={newUser.color_vehiculo}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
-                      <div className="py-3">
-                        <i class="fa-solid fa-dog inline text-lg pr-3"></i>
-                        <h4 className="inline fw-bold text-lg">
-                          Datos de la mascota
-                        </h4>
-                      </div>
-                      <div className="grid grid-cols-3 gap-6 mt-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Tipo de mascota
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Gato"
-                            name="pet_tipo"
-                            onChange={handleChange}
-                            value={newUser.pet_tipo}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Raza
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Modelo"
-                            name="raza"
-                            onChange={handleChange}
-                            value={newUser.raza}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Nombre
-                          </label>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="placa"
-                            name="pet_nombre"
-                            onChange={handleChange}
-                            value={newUser.pet_nombre}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
-                      <div className="py-3">
-                        <i class="fa-solid fa-lock inline text-lg pr-3"></i>
+                        <i className="fa-solid fa-lock inline text-lg pr-3"></i>
                         <h4 className="inline fw-bold text-lg">
                           Datos de ingreso a la plataforma
                         </h4>
@@ -586,6 +484,118 @@ const userRegister = () => {
                         )}
                       </div>
                     </div>
+                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
+                      <div className="py-3">
+                        <i className="fa-solid fa-car inline text-lg pr-3"></i>
+                        <h4 className="inline fw-bold text-lg">
+                          Datos del Vehículo
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6 mt-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Marca
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Marca"
+                            name="marca_vehiculo"
+                            onChange={handleChange}
+                            value={newUser.marca_vehiculo}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Modelo
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Modelo"
+                            name="modelo_vehiculo"
+                            onChange={handleChange}
+                            value={newUser.modelo_vehiculo}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Placa
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="placa"
+                            name="placa_vehiculo"
+                            onChange={handleChange}
+                            value={newUser.placa_vehiculo}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Color
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="color"
+                            name="color_vehiculo"
+                            onChange={handleChange}
+                            value={newUser.color_vehiculo}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
+                      <div className="py-3">
+                        <i className="fa-solid fa-dog inline text-lg pr-3"></i>
+                        <h4 className="inline fw-bold text-lg">
+                          Datos de la mascota
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-3 gap-6 mt-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Tipo de mascota
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Gato"
+                            name="pet_tipo"
+                            onChange={handleChange}
+                            value={newUser.pet_tipo}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Raza
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Modelo"
+                            name="raza"
+                            onChange={handleChange}
+                            value={newUser.raza}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
+                            Nombre
+                          </label>
+                          <input
+                            type="text"
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="placa"
+                            name="pet_nombre"
+                            onChange={handleChange}
+                            value={newUser.pet_nombre}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
                     <div className="flex justify-end mt-6">
                       <button className="bg-[#F3F4F6FF] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Cancel
@@ -648,7 +658,7 @@ const userRegister = () => {
             </div>
           </div>
         </main>
-      </div>
+      </form>
     </div>
   );
 };

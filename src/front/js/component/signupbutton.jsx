@@ -31,7 +31,7 @@ const Signupbutton = () => {
                 <div className="m-auto text-center">
                     <h4 className="text-2xl mb-2 text-white font-body"> Buen Vecino - Conectando Residentes</h4>
                     <h1 className="text-6xl font-bold text-white font-title mb-2">Plataforma de Servicios Vecinales</h1>
-                    <Link to={'/userRegister'} button className="bg-white   lg:inline-block lg:mt-0 text-[#796FC3FF] hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
+                    <Link to={'/userRegister/1'} button className="bg-white   lg:inline-block lg:mt-0 text-[#796FC3FF] hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
                         Registrate</Link>
                 </div>
 

@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
-      apiUrl: "http://127.0.0.1:3001/api",
+      apiUrl: "http://localhost:3001/api",
       publicaciones: [],
       allResidents: [],
       nameUnitCreated: null,
@@ -13,7 +13,12 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       addUnit: async (newUnitUser) => {
         try {
-          console.log(newUnitUser);
+          if(!newUnitUser.email || !newUnitUser.password || !newUnitUser.nombre_unidad || !newUnitUser.nit 
+            || !newUnitUser.direccion || !newUnitUser.telefono || !newUnitUser.nombres_admin || !newUnitUser.apellidos 
+            || !newUnitUser.celular || !newUnitUser.cedula){
+            alert("Porfavor, Completa todos los campos") 
+            return(false);
+          }
           const store = getStore();
           const response = await fetch(store.apiUrl + "/registration", {
             method: "POST",
@@ -24,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           let data = await response.json();
           setStore({...store, nameUnitCreated: data.nombre_unidad});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -31,7 +37,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addUser: async (newUser) => {
         try {
-          console.log(newUser);
+          if(!newUser.torre || !newUser.num_apto || !newUser.tipo || !newUser.nombres || !newUser.apellidos || !newUser.celular
+            || !newUser.cedula || !newUser.email || !newUser.password){
+              alert("Porfavor, Completa todos los campos") 
+            return(false);
+            }
           const store = getStore();
           const response = await fetch(store.apiUrl + "/userRegister", {
             method: "POST",
@@ -40,8 +50,10 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
             },
           });
+          console.log(response);
           let data = await response.json();
           setStore({...store, nameUserCreated: data.nombres});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -57,8 +69,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         })
         const data = await response.json();
-        setStore({user:data})
-        localStorage.setItem("token", data.token)
+        if (response.ok) 
+        {
+          setStore({user:data.user})
+          localStorage.setItem("token", data.token)
+          return true;
+        }
+        else{
+          return false;
+        }
+        
       },
 
       addPublicacion: async (publicando) => {
@@ -88,9 +108,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(allPosts);
       },
 
-      addReservacion: async () => {
+      addReservaciones: async () => {
         const store = getStore()
-        const response = await fetch(store.api + 'reservaciones', {
+        const response = await fetch(store.api + 'reservas', {
           method: "POST",
           body: JSON.stringify({descripcion: reservacion.descripcion,
           personas: parseInt(reservacion.personas),
