@@ -12,6 +12,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -47,6 +48,15 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+
+# app.config['MAIL_SERVER'] = os.environ.get("MAIL_SERVER")
+# app.config['MAIL_PORT']   = os.environ.get("MAIL_PORT")
+# app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
+# app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+
+# mail = Mail(app)
 
 # Handle/serialize errors like a JSON object
 

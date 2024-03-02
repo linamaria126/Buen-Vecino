@@ -26,10 +26,14 @@ export const Registration = () => {
     console.log(newUnitUser)
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.addUnit(newUnitUser);
-    handleOpenModalSubmit();
+    let response = await actions.addUnit(newUnitUser);
+    console.log(response)
+    if (response) {
+      handleOpenModalSubmit();
+    }
+    
     
   };
 
@@ -71,7 +75,7 @@ export const Registration = () => {
   return (
 
     <div className="w-auto bg-gray-50">
-      <div className="min-h-screen flex flex-col">
+      <form className="min-h-screen flex flex-col">
         <div>
           <Banner />
         </div>
@@ -385,10 +389,10 @@ export const Registration = () => {
 
                         {showDeclineMessage && (
                           <div className="fixed inset-0 flex items-center justify-center z-50">
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-md">
-                              <div className="flex justify-between items-center bg-[#9890D1FF]">
-                                <h5 className="mx-3 my-2">Notificación</h5>
-                                <button onClick={() => setShowDeclineMessage(false)} className="text-sm text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i className="fa-solid fa-xmark mx-3 "></i></button>
+                            <div className="bg-[#DEE1E6FF] rounded-lg border border-gray-200 shadow-md m-10 pb-10">
+                              <div className="flex justify-between items-center bg-[#796FC3FF]">
+                                <h5 className="mx-3 my-2 text-white text-lg font-bold">Notificación</h5>
+                                <button onClick={() => setShowDeclineMessage(false)} className="text-lg text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"><i className="fa-solid fa-xmark mx-3 text-white text-lg font-bold hover:text-sky-400"></i></button>
                               </div>
                               <div>
                                 <p className="text-black font-old font-body mx-3 my-2">Lo sentimos, para formar parte de la plataforma, es necesario aceptar nuestra política de privacidad.</p>
@@ -460,7 +464,7 @@ export const Registration = () => {
             </div>
           </div>
         </main>
-      </div>
+      </form>
     </div>
   );
 };

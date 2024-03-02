@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../img/logo.png"
+import { Context } from "../store/appContext";
+
 
 
 const Paneladmin = () => {
+    const [currentTable, setCurrentTable] = useState(1);
+
+    const residentsPerTable = 5;
+
+    const lastIndexPerTable = currentTable * residentsPerTable;
+
+    const firstIndexPerTable = residentsPerTable - lastIndexPerTable;
+
+    const residents = 5
+
+    const { store, actions } = useContext(Context)
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen)
     }
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const getData = async () => {
+            await actions.getAllUnis()
+        }
+        getData()
+    }, [])
 
     return (
         <>
@@ -24,7 +45,7 @@ const Paneladmin = () => {
                     <div className="relative">
                         <button onClick={toggleDropdown} className="border-solid border-gray-400 border-[1px] p-2 rounded flex justify-start items-center gap-4">
                             Notificaciones
-                            <i class="fa-solid fa-angle-down"></i>
+                            <i className="fa-solid fa-angle-down"></i>
                         </button>
                         {isOpen && (
                             <div className="absolute top-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
@@ -51,10 +72,10 @@ const Paneladmin = () => {
                 <div className="flex flex-col justify-between m-8">
                     <div className="m-auto">
                         <input type="search" className="border-2" placeholder="buscar" />
-                        <button className="bg-blue-500 text-white px-4 py-2">category</button>
+                        <button className="text-black px-4 py-2">Filtrar</button>
                     </div>
                     <div className="flex justify-center">
-                        <table class=" table-auto border-2">
+                        <table className=" table-auto border-2">
                             <thead>
                                 <tr className=" bg-gray-100">
                                     <th className="px-4 py-2">Apto.</th>
@@ -67,60 +88,12 @@ const Paneladmin = () => {
                             </thead>
                             <tbody>
                                 <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1961</td>
-                                    <td className="px-4 py-2">1961</td>
-                                    <td className="px-4 py-2">1961</td>
-                                    <td className="px-4 py-2">1961</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1972</td>
-                                    <td className="px-4 py-2">1972</td>
-                                    <td className="px-4 py-2">1972</td>
-                                    <td className="px-4 py-2">1972</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                </tr>
-                                <tr className="border-b-2">
-                                    <td className="px-4 py-2">10</td>
-                                    <td className="px-4 py-2">3</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
-                                    <td className="px-4 py-2">1975</td>
+                                    <td className="px-4 py-2">{}</td>
+                                    <td className="px-4 py-2">{}</td>
+                                    <td className="px-4 py-2">{}</td>
+                                    <td className="px-4 py-2">{}</td>
+                                    <td className="px-4 py-2">{}</td>
+                                    <td className="px-4 py-2">{}</td>
                                 </tr>
                             </tbody>
                         </table>

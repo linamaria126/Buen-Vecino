@@ -36,7 +36,7 @@ const Layout = () => {
             <Route element={<Homeuser />} path="/homeuser" />
             <Route element={<Homeadmin />} path="/homeadmin" />
             <Route element={<Registration />} path="/registration" />
-            <Route element={<UserRegister />} path="/userRegister" />
+            <Route element={<UserRegister />} path="/userRegister/:uniId" />
             <Route element={<Login />} path="/login" />
             <Route element={<ModalApproval />} path="/modalApprobal" />
             <Route element={<Modal />} path="/modal" />

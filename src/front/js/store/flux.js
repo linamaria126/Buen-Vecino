@@ -1,20 +1,28 @@
+const API_URL=process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
-      apiUrl: "http://127.0.0.1:3001/api",
+      apiUrl: "http://localhost:3001/api",
       publicaciones: [],
       allResidents: [],
       nameUnitCreated: null,
       users: [],
-      reservaciones: [],
+      unis:[],
+      reservaciones:[],
+      token: localStorage.getItem("token") || ""
     },
     actions: {
       addUnit: async (newUnitUser) => {
         try {
-          console.log(newUnitUser);
+          if(!newUnitUser.email || !newUnitUser.password || !newUnitUser.nombre_unidad || !newUnitUser.nit 
+            || !newUnitUser.direccion || !newUnitUser.telefono || !newUnitUser.nombres_admin || !newUnitUser.apellidos 
+            || !newUnitUser.celular || !newUnitUser.cedula){
+            alert("Porfavor, Completa todos los campos") 
+            return(false);
+          }
           const store = getStore();
-          const response = await fetch(store.apiUrl + "/registration", {
+          const response = await fetch(API_URL + "/registration", {
             method: "POST",
             body: JSON.stringify(newUnitUser),
             headers: {
@@ -22,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           let data = await response.json();
-          setStore({ ...store, nameUnitCreated: data.nombre_unidad });
+          setStore({...store, nameUnitCreated: data.nombre_unidad});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -30,17 +39,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addUser: async (newUser) => {
         try {
-          console.log(newUser);
+          if(!newUser.torre || !newUser.num_apto || !newUser.tipo || !newUser.nombres || !newUser.apellidos || !newUser.celular
+            || !newUser.cedula || !newUser.email || !newUser.password){
+              alert("Porfavor, Completa todos los campos") 
+            return(false);
+            }
           const store = getStore();
-          const response = await fetch(store.apiUrl + "/userRegister", {
+          const response = await fetch(API_URL + "/userRegister", {
             method: "POST",
             body: JSON.stringify(newUser),
             headers: {
               "Content-Type": "application/json",
             },
           });
+          console.log(response);
           let data = await response.json();
-          setStore({ ...store, nameUserCreated: data.nombres });
+          setStore({...store, nameUserCreated: data.nombres});
+          return(true);
         } catch (e) {
           console.error(e);
         }
@@ -48,7 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       login: async (newUser) => {
         const store = getStore();
-        const response = await fetch(store.apiUrl + "/login", {
+        const response = await fetch(API_URL + "/login", {
           method: "POST",
           body: JSON.stringify(newUser),
           headers: {
@@ -56,15 +71,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
         const data = await response.json();
-        setStore({ user: data });
-        localStorage.setItem("token", data.token);
+        if (response.ok) 
+        {
+          setStore({user:data, token:data.token})
+          localStorage.setItem("token", data.token)
+          return true;
+        }
+        else{
+          return false;
+        }
+        
       },
 
       addPublicacion: async (publicando) => {
         console.log(publicando);
         const store = getStore();
         console.log(store.publicaciones);
-        const response = await fetch(store.api + "publicaciones", {
+        const response = await fetch(API_URL + "/publicaciones", {
           method: "POST",
           body: JSON.stringify({
             contenido: publicando.contenido,
@@ -81,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getPublicaciones: async () => {
         const store = getStore();
-        const response = await fetch(store.api + "publicaciones/1");
+        const response = await fetch(API_URL + "/publicaciones/1");
         const allPosts = await response.json();
         setStore({ publicaciones: allPosts });
         console.log(allPosts);
@@ -103,25 +126,38 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
-        const store = getStore();
-        const response = await fetch(
-          `${store.apiURL}/estadopendiente/${unidad_residencial_id}/${estado}`
-        );
-        const data = await response.json();
-        setStore({ users: data.users });
-        console.log(data.users);
-      },
+        // const store=getStore();
+        // const response = await fetch(`${API_URL}/estadopendiente/${unidad_residencial_id}/${estado}`)
+        const store= getStore();
+        const response = await fetch (`http://127.0.0.1:3001/api/estadopendiente/${unidad_residencial_id}/${estado}`)
+        const data = await response.json()
+        setStore({users : data.users})
+        console.log(data.users)
+      
+      }, 
+
+      getAllUnis: async () => {
+        const store=getStore();
+        const response = await fetch(`${API_URL}/get/unis`)
+        console.log(response)
+        const data = await response.json()
+        console.log(data)
+        setStore({unis : data.unis})
+        console.log(data.unis)
+      
+      }, 
 
       putUpdatedStatus: async (residente_id, selectedStatus) => {
-        const store = getStore();
-        const response = await fetch(
-          `${store.apiURL}/actualizarestado/${residente_id}`,
-          {
-            method: "PUT",
-            body: JSON.stringify({ estado: selectedStatus }),
-            headers: {
-              "Content-Type": "application/json",
-            },
+        const store=getStore();
+        // const response =await fetch (`${API_URL}/actualizarestado/${residente_id}` , 
+        const response =await fetch (`http://127.0.0.1:3001/api/actualizarestado/${residente_id}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({estado : selectedStatus}),
+          headers:{
+            "Content-Type": "application/json",
+            "authorization" : `Bearer ${store.token}`
+
           }
         );
         if (response.ok) return true;

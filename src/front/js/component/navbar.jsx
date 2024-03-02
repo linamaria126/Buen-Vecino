@@ -22,7 +22,7 @@ const Navbar = () => {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-md font-body lg:flex-grow lg:flex justify-around ">
-            <a href="#quienes-somos" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4">
+            <a href="#quienes-somos" className="block mt-4 lg:inline-block lg:mt-0 font-title text-black hover:text-indigo-600 mr-4">
               Acerca de nosotros
             </a>
             <a href="#caracteristicas" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4 font-body">
