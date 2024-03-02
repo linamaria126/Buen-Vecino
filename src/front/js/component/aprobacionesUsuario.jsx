@@ -26,7 +26,7 @@ const Aprobaciones_usuario = () => {
     const currentUsers = store.users.slice(indexOfFirstItem, indexOfLastItem);
 
     const statusUpdate = async(value, residentId) =>{
-        const is_active= value === "Aprobado" ? true : false;
+        
         const response = await actions.putUpdatedStatus(residentId, value)
         if(response) {actions.getAllResidentsByStatus(1, "Pendiente")} 
     }
@@ -111,10 +111,10 @@ const Aprobaciones_usuario = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentUsers.map((residente)=>{
+                                    {currentUsers.map((residente, index)=>{
                                         return(
 
-                                            <tr key={store.users.id} className="border transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-[#9890D173]">
+                                            <tr key={`${residente.id}-${index}`} className="border transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-[#9890D173]">
                                             <td className="whitespace-nowrap px-6 py-4 font-medium">{residente.id}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{residente.nombres}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{residente.apellidos}</td>

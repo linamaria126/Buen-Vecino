@@ -145,35 +145,6 @@ def create_post():
         db.session.rollback()
         return jsonify('Hubo un problema con tu publicacion'), 500
     
-
-@api.route('reservas/', methods=['POST'])
-def create_reservacion():
-    body = request.json
-    descripcion = body.get('descripcion', None)
-    personas = body.get('personas', None)
-    fecha = body.get('inicio', None)
-
-    if descripcion is None :
-        return jsonify({'error': 'Se necesita una descripcion de la reserva'}), 404
-    
-    if personas is None :
-        return jsonify({'error': 'numero de personas es necesario especificar'}), 404
-    
-    if fecha is None :
-        return jsonify({'error': 'Se necesita una fecha para la reserva'}), 404
-    
-    new_reservacion = Reservas(descripcion=descripcion, personas=personas, inicio=fecha)
-
-    db.session.add(new_reservacion)
-    try:
-        db.sesion.commit()
-        return 'reserva enviada'
-    
-    except Exception as error:
-        db.session.rollback()
-        return 'Hubo un problema con tu reservacion'
-    
-
     
 
 @api.route('/reservas', methods=['POST'])
