@@ -6,8 +6,9 @@ from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publi
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
+
 
 
 api = Blueprint('api', __name__)
@@ -15,7 +16,8 @@ api = Blueprint('api', __name__)
 
 
 # Allow CORS requests to this API
-CORS(api)
+CORS(api, origins=["*"])
+
 
 
 
@@ -197,11 +199,11 @@ def create_resident():
         }), 400
     
     
-    # apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
-    # if apto is None:
-    #     return jsonify({
-    #         "error": "El numero de apartamento no existe"
-    #     }), 404
+    apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
+    if apto is None:
+        return jsonify({
+            "error": "El numero de apartamento no existe"
+        }), 404
     
 
     
@@ -288,18 +290,29 @@ def get_all_residents(unidad_residencial_id):
     
     
 @api.route('/actualizarestado/<int:residente_id>' , methods =['PUT'])
+@jwt_required()
+
 def update_residente(residente_id):
-    user= Residente.query.get(residente_id)
-    if not user:
+    residente= Residente.query.get(residente_id)
+    if not residente:
         return jsonify({'Error': 'Residente no encontrado'}), 404
+    
+    user=get_jwt_identity()
+    user_admin= Residente.query.get(user["id"])
+    print(user_admin.tipo)
+    
+    if not user_admin:
+        return "usuario no existe", 404
+    if user_admin.tipo !=  "administrador" :
+        return "no authirizado", 401
     
     data= request.get_json()
     if 'estado' in data:
-        user.estado = data.get('estado')
+        residente.estado = data.get('estado')
         
         try:
             db.session.commit()
-            return jsonify({'mensaje': 'Usuario actualizado exitosamente', 'user': user.serialize()}), 200
+            return jsonify({'mensaje': 'Usuario actualizado exitosamente', 'user': residente.serialize()}), 200
         except Exception as error:
             db.session.rollback()
             return 'Error al actualizar el estado del residente', 500
@@ -328,11 +341,14 @@ def user_login():
     if user is None:
         return jsonify({"error": "Usuario no encontrado"}), 404
     
-    password_match= check_password_hash(user.password, password)
-    if not password_match:
-        return jsonify({"error":"password o usuario incorrecto"}), 401 
+    # password_match= check_password_hash(user.password, password)
+    # if not password_match:
+    #     return jsonify({"error":"password o usuario incorrecto"}), 401 
     
-    token=create_access_token(identity=email)
+    token=create_access_token(identity=
+                              {
+                                  "email":email,
+                                  "id": user.id})
     
     return jsonify({"user":user.serialize(), "token":token})
 

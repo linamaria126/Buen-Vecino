@@ -3,12 +3,13 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       api: "https://literate-parakeet-jj5754r5r9r935pw6-3001.app.github.dev/api/",
-      apiUrl: "http://127.0.0.1:3001/api",
+      apiUrl: "http://localhost:3001/api",
       publicaciones: [],
       allResidents: [],
       nameUnitCreated: null,
       users: [],
-      reservaciones:[]
+      reservaciones:[],
+      token: localStorage.getItem("token") || ""
     },
     actions: {
       addUnit: async (newUnitUser) => {
@@ -57,7 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         })
         const data = await response.json();
-        setStore({user:data})
+        setStore({user:data, token:data.token})
         localStorage.setItem("token", data.token)
       },
 
@@ -106,8 +107,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
-        const store=getStore();
-        const response = await fetch(`${store.apiURL}/estadopendiente/${unidad_residencial_id}/${estado}`)
+        const store= getStore();
+        const response = await fetch (`http://127.0.0.1:3001/api/estadopendiente/${unidad_residencial_id}/${estado}`)
         const data = await response.json()
         setStore({users : data.users})
         console.log(data.users)
@@ -116,12 +117,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       putUpdatedStatus: async (residente_id, selectedStatus) => {
         const store=getStore();
-        const response =await fetch (`${store.apiURL}/actualizarestado/${residente_id}` , 
+        const response =await fetch (`http://127.0.0.1:3001/api/actualizarestado/${residente_id}`,
         {
           method: 'PUT',
           body: JSON.stringify({estado : selectedStatus}),
           headers:{
             "Content-Type": "application/json",
+            "authorization" : `Bearer ${store.token}`
 
           }
          
