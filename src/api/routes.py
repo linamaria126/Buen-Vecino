@@ -176,7 +176,7 @@ def create_reservacion():
 
     
 
-@api.route('reservaciones/', methods=['POST'])
+@api.route('/reservas', methods=['POST'])
 def create_reservacion():
     body = request.json
     descripcion = body.get('descripcion', None)
@@ -196,12 +196,13 @@ def create_reservacion():
 
     db.session.add(new_reservacion)
     try:
-        db.sesion.commit()
+        db.session.commit()
         return 'reserva enviada'
     
     except Exception as error:
         db.session.rollback()
-        return 'Hubo un problema con tu reservacion'
+        print(error)
+        return 'Hubo un problema con tu reservacion', 500
     
 
     

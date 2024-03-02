@@ -68,8 +68,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(newUser),
           headers: {
             "Content-Type": "application/json",
-          }
-        })
+          },
+        });
         const data = await response.json();
         if (response.ok) 
         {
@@ -110,22 +110,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(allPosts);
       },
 
-      addReservaciones: async () => {
-        const store = getStore()
-        const response = await fetch(store.api + 'reservas', {
+      addReservacion: async (reservacion) => {
+        const store = getStore();
+        const response = await fetch(store.api + "reservas", {
           method: "POST",
-          body: JSON.stringify({descripcion: reservacion.descripcion,
-          personas: parseInt(reservacion.personas),
-          inicio: reservacion.fecha}),
+          body: JSON.stringify({
+            descripcion: reservacion.descripcion,
+            personas: parseInt(reservacion.personas),
+            inicio: reservacion.fecha,
+          }),
           headers: {
             "Content-Type": "application/json",
-          }
-        })
-        if(response.ok){
-          console.log(await 'todo correcto')
-        }
+          },
+        });
       },
-
 
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
         // const store=getStore();
@@ -161,11 +159,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             "authorization" : `Bearer ${store.token}`
 
           }
-         
-        });
-        if (response.ok) return true
-        return false
-      }
+        );
+        if (response.ok) return true;
+        return false;
+      },
     },
   };
 };

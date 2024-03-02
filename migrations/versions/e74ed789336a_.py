@@ -1,8 +1,14 @@
 """empty message
 
+<<<<<<<< HEAD:migrations/versions/8cd7494e4141_.py
+Revision ID: 8cd7494e4141
+Revises: 
+Create Date: 2024-02-29 22:23:16.983844
+========
 Revision ID: e74ed789336a
 Revises: 
 Create Date: 2024-02-29 22:56:35.026231
+>>>>>>>> aa6c7444b6762ed8048a2017758848c2af8b63d0:migrations/versions/e74ed789336a_.py
 
 """
 from alembic import op
@@ -10,7 +16,11 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
+<<<<<<<< HEAD:migrations/versions/8cd7494e4141_.py
+revision = '8cd7494e4141'
+========
 revision = 'e74ed789336a'
+>>>>>>>> aa6c7444b6762ed8048a2017758848c2af8b63d0:migrations/versions/e74ed789336a_.py
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -93,7 +103,8 @@ def upgrade():
     op.create_table('reservas',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('inicio', sa.DateTime(), nullable=False),
-    sa.Column('final', sa.DateTime(), nullable=False),
+    sa.Column('descripcion', sa.String(length=200), nullable=True),
+    sa.Column('personas', sa.Integer(), nullable=True),
     sa.Column('residente_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['residente_id'], ['residente.id'], ),
     sa.PrimaryKeyConstraint('id')
