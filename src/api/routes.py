@@ -12,6 +12,7 @@ from datetime import datetime
 from flask_mail import Message, Mail
 
 
+
 api = Blueprint('api', __name__)
 
 app = Flask(__name__)
@@ -207,11 +208,11 @@ def create_resident():
         }), 400
     
     
-    # apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
-    # if apto is None:
-    #     return jsonify({
-    #         "error": "El numero de apartamento no existe"
-    #     }), 404
+    apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
+    if apto is None:
+        return jsonify({
+            "error": "El numero de apartamento no existe"
+        }), 404
     
 
     
@@ -317,7 +318,7 @@ def update_residente(residente_id):
         
         try:
             db.session.commit()
-            return jsonify({'mensaje': 'Usuario actualizado exitosamente', 'user': user.serialize()}), 200
+            return jsonify({'mensaje': 'Usuario actualizado exitosamente', 'user': residente.serialize()}), 200
         except Exception as error:
             db.session.rollback()
             return 'Error al actualizar el estado del residente', 500

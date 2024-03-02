@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       allResidents: [],
       nameUnitCreated: null,
       users: [],
-      reservaciones:[]
+      reservaciones:[],
+      token: localStorage.getItem("token") || ""
     },
     actions: {
       addUnit: async (newUnitUser) => {
@@ -71,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         if (response.ok) 
         {
-          setStore({user:data.user})
+          setStore({user:data, token:data.token})
           localStorage.setItem("token", data.token)
           return true;
         }
@@ -126,8 +127,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       getAllResidentsByStatus: async (unidad_residencial_id, estado) => {
-        const store=getStore();
-        const response = await fetch(`${store.apiURL}/estadopendiente/${unidad_residencial_id}/${estado}`)
+        const store= getStore();
+        const response = await fetch (`http://127.0.0.1:3001/api/estadopendiente/${unidad_residencial_id}/${estado}`)
         const data = await response.json()
         setStore({users : data.users})
         console.log(data.users)
@@ -136,12 +137,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       putUpdatedStatus: async (residente_id, selectedStatus) => {
         const store=getStore();
-        const response =await fetch (`${store.apiURL}/actualizarestado/${residente_id}` , 
+        const response =await fetch (`http://127.0.0.1:3001/api/actualizarestado/${residente_id}`,
         {
           method: 'PUT',
           body: JSON.stringify({estado : selectedStatus}),
           headers:{
             "Content-Type": "application/json",
+            "authorization" : `Bearer ${store.token}`
 
           }
          
