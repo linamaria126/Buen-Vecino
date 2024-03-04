@@ -93,17 +93,18 @@ def create_unit():
     
     hashed_passwords = generate_password_hash(password)
     new_unit_user = Unidad_residencial(nombre_unidad=nombre_unidad, nit=nit, direccion=direccion, telefono=telefono, cant_apto=cant_apto, cant_torres=cant_torres, is_active=True)
-    new_user=Residente(nombres=nombres_admin, apellidos=apellidos, celular=celular, cedula=cedula, email=email, password=hashed_passwords, is_active=True, tipo="administrador")
-    
     
     db.session.add(new_unit_user)
-    db.session.add(new_user)
+    
     try:
         db.session.commit()
 
         # solución temporal al problema de la falta de admin de apts
         new_apartament = Apartamento(torre='1', num_apto='903', num_habitantes=3, unidad_residencial_id=new_unit_user.id)
         db.session.add(new_apartament)
+        new_user=Residente(nombres=nombres_admin, apellidos=apellidos, celular=celular, cedula=cedula, email=email, password=hashed_passwords, is_active=True, tipo="administrador", unidad_residencial_id=new_unit_user.id)       
+        db.session.add(new_user)
+        
         db.session.commit()
 
         return jsonify({'created': True, 'id': new_unit_user.id,'nombre_unidad': new_unit_user.nombre_unidad }), 200
