@@ -93,7 +93,7 @@ const Content = () => {
           <div className="text-center">
             <h2 className="text-3xl font-bold font-title mb-4">Eres administrador???</h2>
             <button className="bg-[#6BC1E2FF] text-white-600 px-6 py-2 rounded-full font-body">Regístrate aquí
-              <Link to={'/registration'}  className="bg-white   lg:inline-block lg:mt-0 text-[#796FC3FF] hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
+              <Link to={'/registration'}  className="bg-white   lg:inline-block lg:mt-0 hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
                 Registrate</Link>
             </button>
           </div>

@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Unidad_residencial, Residente, Vehiculos, Publicaciones, Mascotas, Apartamento, Reservas
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
@@ -118,7 +119,7 @@ def create_unit():
 
 @api.route('/publicaciones/<int:unidad_id>', methods=['GET'])
 def get_publicaciones(unidad_id):
-    post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).all()    
+    post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).order_by( desc(Publicaciones.creacion) ).all()    
     all_items =[
         item.serialize() for item in post
     ]
@@ -351,6 +352,7 @@ def update_residente(residente_id):
 @api.route('/estadopendiente/<int:unidad_residencial_id>/<string:estado>' , methods =["GET"])
 def get_residents_by_status(unidad_residencial_id, estado):
     residents_by_status=Residente.query.filter_by(unidad_residencial_id=unidad_residencial_id, estado=estado).all()
+    print (residents_by_status)
     if residents_by_status is None:
         return jsonify({'Error' : 'user not found'}), 404
     
@@ -371,9 +373,13 @@ def user_login():
     if user is None:
         return jsonify({"error": "Usuario no encontrado"}), 401
     
+    if user.tipo != 'administrador' and user.estado != 'Aprobado':
+        return jsonify({"error": "El usuario está a la espera de ser aprobado por el administrador"}), 401
+    
+    
     password_match= check_password_hash(user.password, password)
     if not password_match:
-        return jsonify({"error":"password o usuario incorrecto"}), 401 
+        return jsonify({"error":"Password o usuario son incorrecto"}), 401 
     
     token=create_access_token(identity={"email":email, "id": user.id})
     

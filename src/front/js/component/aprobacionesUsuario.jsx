@@ -13,7 +13,7 @@ const Aprobaciones_usuario = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const totalItems = store.users.length;
+  const totalItems = store.users.length || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;

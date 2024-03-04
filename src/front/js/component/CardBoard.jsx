@@ -17,7 +17,7 @@ const CardBoard = () => {
               />
               <div>
                 
-                <p className="font-semibold">Carmen Martinez</p>
+                <p className="font-semibold">{publicacion.residente.nombres+' '+publicacion.residente.apellidos}</p>
                 <p className="text-gray-700">{publicacion.contenido}
                 </p>
                 <p className="text-gray-500 text-xs mt-2 pt-3 pb-2">{publicacion.creacion}</p>

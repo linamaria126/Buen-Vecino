@@ -11,6 +11,9 @@ const Login = () => {
     password: "",
   });
 
+  const [mensaje, setMensaje] = useState("");
+
+
   const handleChange = (e) => {
     setLogin({ ...newLogin, [e.target.name]: e.target.value });
     console.log(newLogin);
@@ -19,7 +22,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const response = await actions.login(newLogin);
-    if (response) {
+    if (response.success) {
         console.log(store.user);
       if (store.user.tipo == "administrador") {
         navigate("/homeadmin");
@@ -27,6 +30,7 @@ const Login = () => {
         navigate("/homeuser");
       }
     } else {
+      setMensaje(response.error);
       setShowModal(true);
     }    
   };
@@ -102,8 +106,7 @@ const Login = () => {
                       Error de autenticación
                     </h2>
                     <p className="text-gray-600">
-                      El email ó la contraseña sopn incorrectos, Por favor, verifica tus
-                      datos.
+                      {mensaje}
                     </p>
                     <button
                       onClick={() => setShowModal(false)}

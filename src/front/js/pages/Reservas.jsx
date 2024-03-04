@@ -1,19 +1,20 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import NavbarAdmin from "../component/NavbarAdmin.jsx";
 import NavbarUser from "../component/NavbarUser.jsx";
 import ModalReserva from "../component/ModalReserva.jsx";
 import { Context } from "../store/appContext.js";
 
 const Reservas = () => {
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate()
+  const [userType, setUserType ] = useState(store.user.tipo);
   const today = new Date().toISOString().slice(0, 16);
   const [inputValue, setInputvalue] = useState({
     fecha: null,
     personas: "",
     descripcion: "",
   });
-  const { store, actions } = useContext(Context);
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log(inputValue);
@@ -28,7 +29,9 @@ const Reservas = () => {
 
   return (
     <>
-    <NavbarUser />
+      <div>
+        {userType === 'administrador' ? <NavbarAdmin /> : <NavbarUser />}
+      </div>
     
       <div className="mt-20">
         <div className="container flex ">
