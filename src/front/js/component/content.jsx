@@ -27,7 +27,7 @@ const Content = () => {
               <img src={object} className="h-5 w-25 mb-2" />
               <p className="mb-6 font-body">Somos la aplicación que te conecta con los integrantes de tu misma Unidad Residencial permitiendo encontrar el servicio que requieres más cerca de ti, y haciendo más fácil la consecución de clientes para tu Negocio ó para el servicio que prestas.</p>
               <p className="mb-8 font-body">Que esperas para conectar con un Buen Vecino!!!</p>
-              <Link to={"/userRegister"} button className="bg-[#9890D1FF] text-white px-6 py-2 rounded-full font-body">Registrate</Link>
+              <Link to={"/registration"}  className="bg-[#9890D1FF] text-white px-6 py-2 rounded-full font-body">Registrate</Link>
             </div>
             <div>
               <img src={house} alt="house ilustration" className="bg-[#F2FAFCFF] rounded-full" />
@@ -36,9 +36,9 @@ const Content = () => {
         </div>
       </section>
 
-      <section className="bg-white-100" py-15 id="caracteristicas">
+      <section className="bg-white-100 py-15" id="caracteristicas">
         <div className="container mx-auto">
-          <p className="text-xl font-body text-center text-black-600">Todo una experiencia para tu Unidad Recidencial</p>
+          <p className="text-xl font-body text-center text-black-600">Todo una experiencia para tu Unidad Residencial</p>
           <h2 className="text-3xl font-bold font-title text-center text-black-600 mb-4">Características</h2>
 
           <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-3">
@@ -93,7 +93,7 @@ const Content = () => {
           <div className="text-center">
             <h2 className="text-3xl font-bold font-title mb-4">Eres administrador???</h2>
             <button className="bg-[#6BC1E2FF] text-white-600 px-6 py-2 rounded-full font-body">Regístrate aquí
-              <Link to={'/registration'} button className="bg-white   lg:inline-block lg:mt-0 text-[#796FC3FF] hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
+              <Link to={'/registration'}  className="bg-white   lg:inline-block lg:mt-0 text-[#796FC3FF] hover:bg-[#796FC3FF] text-[#796FC3FF] font-body py-2 px-2 rounded-full md:mt-3 ms-5">
                 Registrate</Link>
             </button>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../component/navbar.jsx';
+import NavbarHome from '../component/NavbarHome.jsx';
 import Content from '../component/content.jsx';
 import Signupbutton from '../component/signupbutton.jsx';
 
@@ -7,7 +7,7 @@ import Signupbutton from '../component/signupbutton.jsx';
 const Home = () => {
 	return (
 		<div>
-			<Navbar />
+			<NavbarHome />
 			<Signupbutton />
 			<Content />
 		</div>

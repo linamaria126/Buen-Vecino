@@ -5,10 +5,10 @@ import buenlogo from '../../img/buenlogo.png';
 
 
 
-const Navbar = () => {
+const NavbarHome = () => {
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap bg-white p-4">
+      <nav className="flex items-center justify-between flex-wrap bg-white p-4 shadow-md max-w-7xl mx-auto">
         <img src={buenlogo} alt="logo" className="h-20 w-30 mr-10 mt-3" />
 
         <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -22,14 +22,14 @@ const Navbar = () => {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-md font-body lg:flex-grow lg:flex justify-around ">
-            <a href="#quienes-somos" className="block mt-4 lg:inline-block lg:mt-0 font-title text-black hover:text-indigo-600 mr-4">
+            <a href="#quienes-somos" className="text-gray-600 inline-flex items-center px-1 pt-4 border-b-2 border-transparent text-lg font-medium leading-5 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
               Acerca de nosotros
             </a>
-            <a href="#caracteristicas" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-indigo-600 mr-4 font-body">
+            <a href="#caracteristicas" className="text-gray-600 inline-flex items-center px-1 pt-4 border-b-2 border-transparent text-lg font-medium leading-5 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
               Características
             </a>
-            <a href="#responsive-header"><Link to={'/login'} button className="bg-[#796FC3FF] mt-3 lg:inline-block lg:mt-0  text-white-600 hover:bg-[#796FC3FF] text-white font-body py-2 px-4 rounded-full ms-5">
-              Iniciar sesión</Link></a>
+            <Link to={'/login'} className="bg-[#796FC3FF] mt-3 lg:inline-block lg:mt-0  text-white-600 hover:bg-purple-900 text-white font-body py-2 px-4 rounded-full ms-5">
+              Iniciar sesión</Link>
           </div>
           <div>
 
@@ -42,6 +42,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar;
-
-
+export default NavbarHome;

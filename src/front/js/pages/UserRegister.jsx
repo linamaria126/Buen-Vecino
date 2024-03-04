@@ -1,14 +1,13 @@
-import React, { useState,  useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import Banner from '../component/banner.jsx';
+import Banner from "../component/banner.jsx";
 
 const userRegister = () => {
   const navigate = useNavigate();
   const params = useParams();
-  
-  if (params.uniId == undefined )
-    uniId = 1
+
+  if (params.uniId == undefined) uniId = 1;
 
   const [newUser, setNewUser] = useState({
     torre: "",
@@ -26,23 +25,25 @@ const userRegister = () => {
     raza: "",
     pet_nombre: "",
     email: "",
-    password: "", 
+    password: "",
     unidad_residencial_id: params.uniId,
   });
 
   const handleChange = (e) => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    console.log(newUser);
+    if (e.target.name == "privacy_policy") {
+      setNewUser({ ...newUser, [e.target.name]: e.target.checked });
+    } else {
+      setNewUser({ ...newUser, [e.target.name]: e.target.value });
+      console.log(newUser);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let response = await actions.addUser(newUser);
-    console.log(response);
-    if(response){
+    if (response) {
       handleOpenModalSubmit();
     }
-  
   };
 
   const { store, actions } = useContext(Context);
@@ -74,7 +75,7 @@ const userRegister = () => {
 
   return (
     <div className="w-auto bg-gray-50">
-      <form className="min-h-screen flex flex-col">
+      <form className="min-h-screen flex flex-col" onSubmit={handleSubmit}>
         <div>
           <Banner />
         </div>
@@ -84,7 +85,7 @@ const userRegister = () => {
               <div className="border-4 border-dashed border-gray-200 rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                   <h3 className="text-2xl leading-6 font-medium text-gray-900 fw-bold">
-                    Crear Perfil - Residente
+                    Formulario de registro de residente
                   </h3>
                   <div className="mt-5">
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm">
@@ -122,53 +123,24 @@ const userRegister = () => {
                             value={newUser.torre}
                           />
                         </div>
-                        <div className="flex flex-col pl-10">
-                          <p className="block text-lg font-medium text-gray-700 px-5 fw-bold">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700">
                             Tipo de residente
-                          </p>
-                          <div className="flex flex-row">
-                            <input
-                              type="radio"
-                              name="tipo"
-                              value="inquilino"
-                              className="pt-4"
-                              onChange={handleChange}
-                              
-                            />
-                            <label for="tipo" className="px-2 pt-2">
-                              Inquilino
-                            </label>
-                          </div>
-                          <div className="flex flex-row">
-                            <input
-                              type="radio"
-                              name="tipo"
-                              value="propietario"
-                              className="pt-4"
-                              onChange={handleChange}
-                            />
-                            <label for="tipo" className="px-2">
-                              Propietario
-                            </label>
-                          </div>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Unidad Residencial
                           </label>
-                          <input
-                            type="text"
+                          <select
+                            name="tipo"
+                            id="tipo"
+                            onChange={handleChange}
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            value="Capriani"
-                            readOnly
-                          />
+                          >
+                            <option value=""></option>
+                            <option value="inquilino">Inquilino</option>
+                            <option value="propietario">Propietario</option>
+                          </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700">
-                            Código de la Unidad Residencial
-                          </label>
                           <input
-                            type="number"
+                            type="hidden"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={newUser.unidad_residencial_id}
                             readOnly
@@ -208,7 +180,6 @@ const userRegister = () => {
                             name="apellidos"
                             onChange={handleChange}
                             value={newUser.apellidos}
-
                           />
                         </div>
                         <div>
@@ -293,23 +264,25 @@ const userRegister = () => {
                       <div className="flex items-center h-5">
                         <input
                           id="privacy_policy"
+                          name="privacy_policy"
                           type="checkbox"
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          onChange={handleChange}
+                          value={"acepto"}
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="privacy_policy"
+                          htmlFor="privacy_policy"
                           className="font-medium text-gray-700"
                           onClick={handleOpenModal}
                           style={{ cursor: "pointer" }}
                         >
-                          He leído y aceptado la{" "}
+                          He leído y aceptado la
                           <span className="text-[#5549AFFF] font-bold">
                             {" "}
                             Política de Privacidad
                           </span>{" "}
-                          
                         </label>
                         <p className="text-gray-500">
                           Sus datos se almacenarán hasta que elimine su cuenta o
@@ -482,6 +455,31 @@ const userRegister = () => {
                             </div>
                           </div>
                         )}
+
+                        {showDeclineMessage && (
+                          <div className="fixed inset-0 flex items-center justify-center z-50">
+                            <div className="bg-[#DEE1E6FF] rounded-lg border border-gray-200 shadow-md m-10 pb-10">
+                              <div className="flex justify-between items-center bg-[#796FC3FF]">
+                                <h5 className="mx-3 my-2 text-white text-lg font-bold">
+                                  Notificación
+                                </h5>
+                                <button
+                                  onClick={() => setShowDeclineMessage(false)}
+                                  className="text-lg text-gray-500 mt-2 hover:text-gray-700 focus:outline-none"
+                                >
+                                  <i className="fa-solid fa-xmark mx-3 text-white text-lg font-bold hover:text-sky-400"></i>
+                                </button>
+                              </div>
+                              <div>
+                                <p className="text-black font-old font-body mx-3 my-2">
+                                  Lo sentimos, para formar parte de la
+                                  plataforma, es necesario aceptar nuestra
+                                  política de privacidad.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="rounded-md bg-[#DEE1E6FF] p-6 shadow-sm mt-4">
@@ -574,7 +572,7 @@ const userRegister = () => {
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="Modelo"
+                            placeholder="Raza"
                             name="raza"
                             onChange={handleChange}
                             value={newUser.raza}
@@ -587,7 +585,7 @@ const userRegister = () => {
                           <input
                             type="text"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            placeholder="placa"
+                            placeholder="Nombre"
                             name="pet_nombre"
                             onChange={handleChange}
                             value={newUser.pet_nombre}
@@ -595,62 +593,63 @@ const userRegister = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex justify-end mt-6">
                       <button className="bg-[#F3F4F6FF] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Cancel
                       </button>
-                      <button
-                        onClick={handleSubmit}className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Submit
-                        {modalOpenSubmit && (
-                          <div className="fixed inset-0 bg-black opacity-80 backdrop-blur-sm">
-                            <div className=" container bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
-                              <div className="grid grid-cols-2 ">
-                                <div className="col-span-2 bg-slate-200">
-                                  <h5 className="mx-4 my-2 font-title font-bold text-black text-left text-xl">
-                                    Tu suscripción está en proceso
-                                  </h5>
-                                </div>
+                      <input
+                        type="submit"
+                        value="Enviar"
+                        className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      />
 
-                                <div className="bg-[#5549AF38] flex text left items-center relative ">
-                                  <h3 className="font-body text-black text-4xl mx-4 pl-10">
+                      {modalOpenSubmit && (
+                        <div className="fixed inset-0 bg-black opacity-80 backdrop-blur-sm">
+                          <div className=" container bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
+                            <div className="grid grid-cols-2 ">
+                              <div className="col-span-2 bg-slate-200">
+                                <h5 className="mx-4 my-2 font-title font-bold text-black text-left text-xl">
+                                  Tu suscripción está en proceso
+                                </h5>
+                              </div>
+
+                              <div className="bg-[#5549AF38] flex text left items-center relative ">
+                                <h3 className="font-body text-black text-4xl mx-4 pl-10">
                                   Felicitaciones! 🎉
-                                  </h3>
-                                  <i className="fa-solid fa-caret-up text-[#D0EBF6FF] text-9xl absolute bottom-8 right-0 "></i>
-                                  <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5">
-                                  </i>
-                                </div>
+                                </h3>
+                                <i className="fa-solid fa-caret-up text-[#D0EBF6FF] text-9xl absolute bottom-8 right-0 "></i>
+                                <i className="fas fa-circle text-[#9890D173] text-8xl absolute top-9 right-5"></i>
+                              </div>
 
-                                <div className="bg-white mx-5 text-left">
-                                  <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
+                              <div className="bg-white mx-5 text-left">
+                                <i className="fa-solid fa-circle-check text-[#796FC3FF] text-6xl mt-5"></i>
 
-                                  <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">
-                                    Información recibida
-                                  </h5>
-                                  
-                                  <p className="font-body text-black text-lg">
-                                    En este momento tu perfil está siendo
-                                    estudiado. Te enviaremos un correo de confirmación cuando tu
-                                    aprobación esté lista. 👍🏻
-                                  </p>
-                                  <div className="flex items-center justify-end mt-5 mb-5 ">
-                                    <button
-                                      onClick={handleCloseModalSubmit}
-                                      data-modal-hide="default-modal"
-                                      type="button"
-                                      className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white"
-                                    >
-                                      Salir
-                                    </button>
-                                  </div>
+                                <h5 className="font-bold text-[#379AE6FF] font-body mt-2 mb-5">
+                                  Información recibida
+                                </h5>
+
+                                <p className="font-body text-black text-lg">
+                                  En este momento tu perfil está siendo
+                                  estudiado. Te enviaremos un correo de
+                                  confirmación cuando tu aprobación esté lista.
+                                  👍🏻
+                                </p>
+                                <div className="flex items-center justify-end mt-5 mb-5 ">
+                                  <button
+                                    onClick={handleCloseModalSubmit}
+                                    data-modal-hide="default-modal"
+                                    type="button"
+                                    className="text-white bg-[#5549AFFF] hover:bg-[#665BBAFF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#5549AFFF] dark:hover:bg-[#5549AFFF] dark:focus:ring-[#5549AFFF]  dark:text-white"
+                                  >
+                                    Salir
+                                  </button>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        )}
-                      </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

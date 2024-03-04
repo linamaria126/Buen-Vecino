@@ -1,12 +1,12 @@
 import React from "react";
-import logo from "../../img/logo.png";
-import image1 from "../../img/image1290.png"
-import image2 from "../../img/image9.png"
-import image3 from "../../img/image1.png"
-import image4 from "../../img/image7.png"
-import user_circle from "../../img/User_circle.png"
-import Handshake from "../../icons/Handshake.js"
+import image1 from "../../img/image1290.png";
+import image2 from "../../img/image9.png";
+import image3 from "../../img/image1.png";
+import image4 from "../../img/image7.png";
+import user_circle from "../../img/User_circle.png";
+import Handshake from "../../icons/Handshake.js";
 import { useNavigate } from "react-router-dom";
+import NavbarUser from "../component/NavbarUser.jsx";
 
 
 
@@ -16,12 +16,8 @@ const Homeuser = () => {
   const navigate = useNavigate()
   return (
     <>
-      <nav className="container flex justify-between mt-2">
-        <img src={logo} alt="logo" className="w-40" />
-        <button onClick={() => navigate("/")} className="shadow-xl rounded-full py-2 px-4 bg-[#9890D1FF] text-white text-center hover:bg-purple-900 ">
-          Logout
-        </button>
-      </nav>
+     <NavbarUser />
+
       <div className=" relative mt-10 h-96 bg-[#9890D1FF] flex justify-center">
         <div className="absolute left-48 bottom-56 purple-200">
           <img

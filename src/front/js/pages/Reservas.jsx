@@ -1,33 +1,36 @@
 import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import Navbar from "../component/navbar.jsx";
+import NavbarUser from "../component/NavbarUser.jsx";
 import ModalReserva from "../component/ModalReserva.jsx";
 import { Context } from "../store/appContext.js";
 
 const Reservas = () => {
+  const navigate = useNavigate()
   const today = new Date().toISOString().slice(0, 16);
   const [inputValue, setInputvalue] = useState({
     fecha: null,
     personas: "",
-    descripcion: ""
+    descripcion: "",
   });
   const { store, actions } = useContext(Context);
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(inputValue)
+    console.log(inputValue);
     actions.addReservacion(inputValue);
-    
+
     //escribo mensaje del modal
   };
   const handlechange = (event) => {
-    setInputvalue({...inputValue, [event.target.name]: event.target.value})
-    console.log(event.target.value)
-  }
+    setInputvalue({ ...inputValue, [event.target.name]: event.target.value });
+    console.log(event.target.value);
+  };
 
   return (
     <>
-      <Navbar />,
-      <div className="bg">
+    <NavbarUser />
+    
+      <div className="mt-20">
         <div className="container flex ">
           <form onSubmit={onSubmit} className="flex-1 border p-3">
             <div className="font-bold my-3">Reservaciones</div>
@@ -53,7 +56,6 @@ const Reservas = () => {
                       min={today}
                       onChange={handlechange}
                       name="fecha"
-                      
                       required
                       className="border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     />
@@ -71,8 +73,9 @@ const Reservas = () => {
             </div>
             <div className="flex justify-center">
               <button
-                className="bg-[#796FC3FF] mt-3 hover:bg-custom-color-dark text-white font-bold py-2 px-4 rounded"
-                type="submit" onClick={onSubmit}
+                className="bg-[#796FC3FF] mt-3 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded"
+                type="submit"
+                onClick={onSubmit}
               >
                 reservar
               </button>

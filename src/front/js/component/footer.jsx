@@ -6,10 +6,7 @@ const Footer = () => {
     <footer className="bg-white text-gray-600 py-8">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-sm">
-          <div className="py-2">
-            <img src={buenlogo} alt="logo" className="h-10 w-30" />
-
-          </div>
+         
           <nav className="mb-4">
             <a href="#" className="px-2">Sobre Nosotros</a>
             <a href="#" className="px-2">Características</a>

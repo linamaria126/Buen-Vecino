@@ -26,26 +26,19 @@ const Login = () => {
       } else {
         navigate("/homeuser");
       }
-    }
-
-    handleApiRequest();
+    } else {
+      setShowModal(true);
+    }    
   };
 
   const [showModal, setShowModal] = useState(false);
-
-  const handleApiRequest = async () => {
-    const response = await actions.login(newLogin);
-    console.log(response);
-    if (!response) {
-      setShowModal(true);
-    }
-  };
+ 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#9890D1FF]">
       <div className="flex-1 max-w-4xl mx-auto p-10">
         
-        <form className="flex">
+        <form className="flex"  onSubmit={handleLogin} >
           <div className="flex-1 bg-white shadow-lg rounded-lg p-8">
             
             <h2 className="text-3xl font-bold mb-2">Bienvenido 👋</h2>
@@ -53,7 +46,7 @@ const Login = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="email"
+                htmlFor="email"
               >
                 Cual es tu e-mail?
               </label>
@@ -62,15 +55,17 @@ const Login = () => {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email"
-                value={newLogin.email}
+                placeholder="Ingresa tu email"
+                onInvalid={e => e.target.setCustomValidity('Ingresa un correo válido')}
+                onInput={e => e.target.setCustomValidity('')}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="password"
               >
                 Digita tu contraseña
               </label>
@@ -79,9 +74,11 @@ const Login = () => {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="******************"
-                value={newLogin.password}
+                placeholder="******************" 
+                onInvalid={e => e.target.setCustomValidity('Debes ingresar una contraseña')}
+                onInput={e => e.target.setCustomValidity('')}
                 onChange={handleChange}
+                required        
               />
               <p className="text-xs italic text-right text-blue-500 hover:text-blue-800 cursor-pointer">
                 Olvidaste tú password?
@@ -89,20 +86,13 @@ const Login = () => {
             </div>
             <div className="flex items-center justify-between mb-6">
               <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox text-indigo-600"
-                  checked
-                />
-                <span className="ml-2">Remember me</span>
+                
+                <span className="ml-2"></span>
               </label>
-              <button
+              <input
                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                onClick={handleLogin}
-              >
-                Continúa
-              </button>
+                type="submit" value="Continúa"
+              />
 
               {/* Modal */}
               {showModal && (
@@ -112,7 +102,7 @@ const Login = () => {
                       Error de autenticación
                     </h2>
                     <p className="text-gray-600">
-                      Email ó contraseña incorrectas, Por favor, verifica tus
+                      El email ó la contraseña sopn incorrectos, Por favor, verifica tus
                       datos.
                     </p>
                     <button
@@ -124,13 +114,7 @@ const Login = () => {
                   </div>
                 </div>
               )}
-            </div>
-            <p className="text-center text-gray-500 text-xs">
-              Don't have an account?{" "}
-              <span className="text-blue-500 hover:text-blue-800 cursor-pointer">
-                Sign up
-              </span>
-            </p>
+            </div>            
           </div>
         </form>
       </div>

@@ -17,7 +17,7 @@ import landingphoto from '../../img/landingphoto.jpg';
 
 const Banner = () => {
     return (
-        <div ClassName="container">
+        <div className="container">
             <div className="grid lg:grid-cols-3 grid-rows-1 bg-[#9890D1FF] relative">
                 <div className="relative">
                     <img src={image1285} alt="1285" className="h-20 w-20 rounded-full bg-[#E2F0DBFF] absolute bottom-0 left-20" />

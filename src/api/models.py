@@ -68,7 +68,7 @@ class Residente(db.Model):
     reservas = db.relationship('Reservas', backref='residente')
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
-    # publicaciones = db.relationship('Publicaciones', backref='residente')
+    publicaciones = db.relationship('Publicaciones', backref='residente')
 
 
     def serialize(self):
@@ -81,7 +81,7 @@ class Residente(db.Model):
             "cedula": self.cedula,
             "email": self.email, # tener en cuenta que no aparece password.
             "is_active": self.is_active,
-            #"publicaciones": self.publicaciones,
+            "publicaciones": self.publicaciones,
             "unidad_residencial_id": self.unidad_residencial_id,
             "apartamento_id": self.apartamento_id,
             "estado": self.estado
@@ -186,7 +186,7 @@ class Publicaciones(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     contenido = db.Column(db.String(500), nullable = False)
     creacion = db.Column(db.DateTime, nullable = False)
-    # residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
+    residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
 
     def serialize(self):
@@ -194,6 +194,6 @@ class Publicaciones(db.Model):
             "id": self.id,
             "contenido": self.contenido,
             "creacion": self.creacion,
-            # "residente_id": self.residente_id
+            "residente_id": self.residente_id
         }
         

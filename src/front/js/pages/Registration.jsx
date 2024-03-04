@@ -19,11 +19,16 @@ export const Registration = () => {
     cedula : "",
     email: "",
     password: "",
+    rePassword: "",
   });
 
   const handleChange = (e)=> {
-    setNewUnitUser({ ...newUnitUser, [e.target.name]: e.target.value });
-    console.log(newUnitUser)
+    if (e.target.name == 'privacy_policy'){
+      setNewUnitUser({ ...newUnitUser, [e.target.name]: e.target.checked });      
+    }else{
+      setNewUnitUser({ ...newUnitUser, [e.target.name]: e.target.value });
+      console.log(newUnitUser);
+    }    
   };
 
   const handleSubmit = async (e) => {
@@ -75,7 +80,10 @@ export const Registration = () => {
   return (
 
     <div className="w-auto bg-gray-50">
-      <form className="min-h-screen flex flex-col">
+      <form 
+      onSubmit={handleSubmit}
+      className="min-h-screen flex flex-col"
+      >
         <div>
           <Banner />
         </div>
@@ -270,8 +278,7 @@ export const Registration = () => {
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="********"
                             name="password"
-                            onChange={handleChange}
-                            value={newUnitUser.password}
+                            onChange={handleChange}                            
                           />
                         </div>
                         <div>
@@ -282,9 +289,8 @@ export const Registration = () => {
                             type="password"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-[#F3F4F6FF] rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="********"
-                            name="password"
-                            onChange={handleChange}
-                            value={newUnitUser.password}
+                            name="rePassword"
+                            onChange={handleChange}                            
                           />
                         </div>
                       </div>
@@ -293,7 +299,9 @@ export const Registration = () => {
                       <div className="flex items-center h-5">
                         <input
                           id="privacy_policy"
+                          name="privacy_policy"
                           type="checkbox"
+                          onChange={handleChange}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
@@ -405,19 +413,19 @@ export const Registration = () => {
                         )}
 
 
-
-
-
                       </div>
                     </div>
                     <div className="flex justify-end mt-6">
                       <button className="bg-[#F3F4F6FF] py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Cancel
                       </button>
-                      <button onClick={handleSubmit} className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Submit
+                      <input  
+                      type='submit'
+                      value="Enviar"
+                      className="ml-3 bg-[#796FC3FF] py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-[#665BBAFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"/>
+                        
+                      
                         {modalOpenSubmit && (
-
                           <div className="fixed inset-0 bg-black opacity-80 backdrop-blur-sm">
                             <div className=" container bg-white p-0 rounded w-full max-w-[90%] max-h-[80vh] overflow-auto">
 
@@ -453,10 +461,7 @@ export const Registration = () => {
 
                             </div>
                           </div>
-
-
                         )}
-                      </button>
                     </div>
                   </div>
                 </div>

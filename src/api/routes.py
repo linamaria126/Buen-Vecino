@@ -94,32 +94,34 @@ def create_unit():
     hashed_passwords = generate_password_hash(password)
     new_unit_user = Unidad_residencial(nombre_unidad=nombre_unidad, nit=nit, direccion=direccion, telefono=telefono, cant_apto=cant_apto, cant_torres=cant_torres, is_active=True)
     new_user=Residente(nombres=nombres_admin, apellidos=apellidos, celular=celular, cedula=cedula, email=email, password=hashed_passwords, is_active=True, tipo="administrador")
-  
+    
     
     db.session.add(new_unit_user)
     db.session.add(new_user)
     try:
         db.session.commit()
-        return jsonify({'created': True, 'nombre_unidad': nombre_unidad}), 200
+
+        # solución temporal al problema de la falta de admin de apts
+        new_apartament = Apartamento(torre='1', num_apto='903', num_habitantes=3, unidad_residencial_id=new_unit_user.id)
+        db.session.add(new_apartament)
+        db.session.commit()
+
+        return jsonify({'created': True, 'id': new_unit_user.id,'nombre_unidad': new_unit_user.nombre_unidad }), 200
     except Exception as error:
         db.session.rollback()
         print(error)
-        return 'ha ocurrido un error', 500
+        return jsonify({
+            "error": "Ha ocurrido un error al intentar crear la unidad"
+        }), 500
  
-
-   
-
-
-
 
 @api.route('/publicaciones/<int:unidad_id>', methods=['GET'])
 def get_publicaciones(unidad_id):
-    post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).all()
-    print(post)
+    post = Publicaciones.query.filter_by(unidad_residencial_id = unidad_id).all()    
     all_items =[
         item.serialize() for item in post
     ]
-    print(post)
+    
     return jsonify(all_items)
 
     
@@ -128,16 +130,17 @@ def create_post():
     body= request.json
     contenido=body.get('contenido', None)
     unidad_id = body.get("unidad_residencial_id", None)
+    residente_id = body.get("residente_id", None)
 
-    if contenido is None:
+    if contenido is None or not contenido:
         return jsonify({'Error': 'Debes agregar un contenido a tu publicacion'}), 400
     
-    if unidad_id is None:
-        return jsonify({'Error': 'Debes agregar el numero de su unidad residencial'}), 400
+    if unidad_id is None or not unidad_id:
+        return jsonify({'Error': 'Debes agregar el número de su unidad residencial'}), 400
     
     current_date=datetime.now()
 
-    new_post = Publicaciones(contenido = contenido, creacion=current_date, unidad_residencial_id=unidad_id)
+    new_post = Publicaciones(contenido = contenido, creacion=current_date, unidad_residencial_id=unidad_id, residente_id=residente_id)
     db.session.add(new_post)
 
     try:
@@ -145,6 +148,7 @@ def create_post():
         return jsonify("Publicacion creada")
     except Exception as error:
         db.session.rollback()
+        print(error)
         return jsonify('Hubo un problema con tu publicacion'), 500
     
     
@@ -160,7 +164,7 @@ def create_reservacion():
         return jsonify({'error': 'Se necesita una descripcion de la reserva'}), 404
     
     if personas is None :
-        return jsonify({'error': 'numero de personas es necesario especificar'}), 404
+        return jsonify({'error': 'número de personas es necesario especificar'}), 404
     
     if fecha is None :
         return jsonify({'error': 'Se necesita una fecha para la reserva'}), 404
@@ -204,21 +208,19 @@ def create_resident():
 
     if torre is None or not torre:
         return jsonify({
-            "error": "El numero de torre es requerido para crear el usuario"
+            "error": "El número de torre es requerido para crear el usuario"
         }), 400 
     elif num_apto is None or not num_apto:
         return jsonify({
-            "error": "El numero de apartamento es requerido para crear el usuario"
+            "error": "El número de apartamento es requerido para crear el usuario"
         }), 400
     
     
     apto = Apartamento.query.filter_by(torre=torre, num_apto=num_apto, unidad_residencial_id=unidad_residencial_id).one_or_none()
     if apto is None:
         return jsonify({
-            "error": "El numero de apartamento no existe"
-        }), 404
-    
-
+            "error": "La combinación de número de apartamento y torreo no existe"
+        }), 400
     
     
     if tipo is None or not tipo:
@@ -257,6 +259,14 @@ def create_resident():
         return jsonify({
             "error": "El email del Residente es requerido para crear el usuario"
         }), 400
+    
+
+    residente = Residente.query.filter_by(email=email).one_or_none()
+    if residente:
+        return jsonify({
+            "error": "El residente con el email proporcionado ya se encuentra registrado"
+        }), 400
+
 
     hashed_resident_passwords = generate_password_hash(password)
     new_user = Residente(tipo=tipo, nombres=nombres, apellidos=apellidos, celular=celular,is_active= False,estado= "Pendiente",
@@ -397,16 +407,75 @@ def create_apto():
 @api.route("/notificacion", methods=["POST"])
 def send_email():
     body=request.json
+    mensaje = body.get("mensaje", None)
+    html = body.get("html", None)
+    url = body.get("url", None)
+
     print(body.get("asunto", None))
     print(body.get("para", None))
-    print(body.get("mensaje", None))
-    
+    print(mensaje)
+
+    if html is None:
+        html = email_template(url)        
+
     msg = Message(
         body.get("asunto", None), 
-        sender = 'amf.laboratorio@gmail.com', 
+        sender = 'buen.vecino.com@gmail.com', 
         recipients = [body.get("para", None)]
         )
-    msg.body = body.get("mensaje", None)
-    msg.html = body.get("html", None)
+    # msg.body = mensaje
+    msg.html = html
     mail.send(msg)
     return jsonify('Notificación enviada')
+
+def email_template(url):
+    return """"
+    <p>&iexcl;Hola! &#128075;</p>
+
+    <p>&iexcl;Bienvenido al equipo de&nbsp;<strong>Buen Vecino</strong>! &#127969;&#127775;</p>
+
+    <p>Estamos emocionados de tenerte como administrador en nuestra plataforma. Como l&iacute;der, tienes un papel fundamental en conectar a los residentes y fomentar una comunidad activa y pr&oacute;spera.</p>
+
+    <p>Aqu&iacute; est&aacute;n los&nbsp;<strong>pasos clave</strong>&nbsp;para comenzar:</p>
+
+    <ol>
+        <li>
+        <p><strong>Registro del Administrador</strong>:</p>
+
+        <ul>
+            <li>Has dado el primer paso al registrarte como administrador en&nbsp;<strong>Buen Vecino</strong>. &iexcl;Gracias por unirte a nosotros! &#127881;</li>
+        </ul>
+        </li>
+        <li>
+        <p><strong>Invita a tus Residentes</strong>:</p>
+
+        <ul>
+            <li>Ahora es el momento de invitar a tus residentes a unirse a la comunidad. Simplemente comparte este enlace con ellos: <a href="%s">Reg&iacute;strate en Buen Vecino.</a></li>
+            <li>Cuantos m&aacute;s residentes se unan, m&aacute;s vibrante ser&aacute; nuestra comunidad. &#128588;</li>
+        </ul>
+        </li>
+        <li>
+        <p><strong>Explora las Funcionalidades</strong>:</p>
+
+        <ul>
+            <li>Una vez que tus residentes se registren, podr&aacute;n:
+            <ul>
+                <li><strong>Conectar con Vecinos</strong>: Encuentra a otros residentes con intereses similares y establece conexiones comerciales.</li>
+                <li><strong>Comprar y Vender</strong>: Explora productos y servicios locales dentro de la plataforma.</li>
+                <li><strong>Eventos y Anuncios</strong>: Mantente al tanto de eventos comunitarios y anuncios importantes.</li>
+                <li><strong>Reserva de espacios</strong>: Rerserva tus zonas sociales de modo r&aacute;pido y eficiente.</li>
+            </ul>
+            </li>
+        </ul>
+        </li>
+        <li>
+        <p><strong>Soporte Personalizado</strong>:</p>
+
+        <ul>
+            <li>Si tienes alguna pregunta o necesitas ayuda, nuestro equipo de soporte est&aacute; aqu&iacute; para ti. No dudes en contactarnos en cualquier momento.</li>
+        </ul>
+        </li>
+    </ol>
+
+    <p>&iexcl;Gracias por ser parte de la familia&nbsp;<strong>Buen Vecino</strong>! &#127775;&#129309;</p>
+    """  % (url)
