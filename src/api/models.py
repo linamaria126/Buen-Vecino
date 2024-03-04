@@ -65,7 +65,7 @@ class Residente(db.Model):
     password = db.Column(db.String(300), nullable = False)
     is_active = db.Column(db.Boolean, nullable = False)
     estado = db.Column(db.String(80), nullable = True)
-    reservas = db.relationship('Reservas', back_populates='residente')
+    # reservas = db.relationship('Reservas', back_populates='residente')
     unidad_residencial_id = db.Column(db.Integer, db.ForeignKey('unidad_residencial.id'))
     apartamento_id = db.Column(db.Integer, db.ForeignKey('apartamento.id'))
     publicaciones = db.relationship('Publicaciones', back_populates='residente')
@@ -168,7 +168,7 @@ class Reservas(db.Model):
     personas = db.Column(db.Integer, nullable = True)
 
     residente_id = db.Column(db.Integer, db.ForeignKey('residente.id'))
-    residente = db.relationship('Residente', back_populates='publicaciones')
+    # residente = db.relationship('Residente', back_populates='publicaciones')
 
     def serialize(self):
         return{
@@ -178,7 +178,7 @@ class Reservas(db.Model):
             "descripcion": self.descripcion,
             "personas": self.personas,
             "residente_id": self.residente_id,
-            "residente": { 'nombres':self.residente.nombres,  'apellidos' : self.residente.apellidos  }
+            # "residente": { 'nombres':self.residente.nombres,  'apellidos' : self.residente.apellidos  }
         }
     
 
