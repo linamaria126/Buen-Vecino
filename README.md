@@ -1,7 +1,7 @@
-#Plataforma Buen Vecino
+# Plataforma Buen Vecino
 
 
-## Vista Previa - Página principal
+## Vista Previa - Portada principal
 
 
 ![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/f3e3ef76-52c5-410e-b285-28d341256279)
@@ -11,13 +11,37 @@
 
 
 
+## Índice:
+
+1. Descripción del Proyecto
+2. Estado del Proyecto
+3. Demostración de funciones y aplicaciones
+4. Acceso al proyecto
+5. Personas contribuyéntes
+6. Personas desarrolladoras del Proyecto
+
+### Descripción del Proyecto:
+
+*Buen Vecino* Es una aplicación creada para ser empleada por las Unidades Residenciales. Permite que los Residentes que forman parte de una Unidad Residencial se conecten entre sí para la compra y venta de Servicios, dentro de su misma Unidad Residencial o Condominio, generando con esto una *Comunidad Colaborativa*, y una mejora de la economía de los integrantes de la Comunidad. Lo cual no solo favorecería a los miembros de la Unidad  sinó también a la Unidad residencial como tal, puesto que al contribuír de modo positivo en la economía de los hogares permitirá un mejor flujo y  facilitará  el cumplimiento de las responsabilidades como el pago de la cuota de la Admnistración. 
+
+Para ser parte de *Buen Vecino* Se requiere inialmente que la Unidad Residencial se registre en la plataforma, al igual que el administrador de la Unidad o Conjunto Residencial. 
+
+![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/97859994-6c73-4ad4-aa70-3d15304bf789)
+Formulario de Registro de Unidad Residencial y Administrador de la Unidad.
 
 
+Posterior al registro de la Unidad, le llegará un correo a el administrador con los pasos siguientes, dentro de los cuales tendrá un Link que podrá  distribuír entre los miembros de la Unidad residencial, para invitarlos a formar parte de *Buen Vecino* , como residente de su Unidad Residencial. 
+
+![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/562b5a4a-daae-4a6c-882e-c982f03d31a0)
+Correo que llegará posterior al registro de una Unidad Residencial en Buen Vecino
+
+Para que un Residente sea parte de Buen Vecino, deberá contar con la aprobación de la administración, esto garantizará que quienes formen parte de la comunidad *Buen Vecino* De cierta Unidad Residencial sean vecinos entre ellos, y permitirá a la vez brindar seguridad y confianza a la plataforma.
+
+Cuando un Residente recibe y le da click a el link enviado por la la Administración accederá al registro de Usuario de Residente, dentro del cual deberá incluír los datos importantes para el manejo de las bases de datos de la Unidad Residencial, como son: número de apartamento y torre al que pertenece, cantidad de personas que habitan su casas o apartamento, nombre, raza y tipo de mascota(s) Placa, marca y color de vehículo, número de parqueadero, teléfono, entre otros datos de importancia para la adecuada gestión administrativa. Después de introducir y enviar la información, requerirá de la aprobación de la administración para poder dar uso a la plataforma *Buen Vecino* 
+
+![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/a3560fea-3aff-46dc-a254-f1448bc83464)
 
 
-
-
-# WebApp boilerplate with React JS and Flask API
 
 Build web applications using React.js for the front end and python/flask for your backend API.
 
