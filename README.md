@@ -1,3 +1,8 @@
+#Plataforma Buen Vecino
+
+
+## Vista Previa - Página principal
+
 
 ![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/f3e3ef76-52c5-410e-b285-28d341256279)
 
