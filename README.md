@@ -26,7 +26,7 @@
 
 Para ser parte de *Buen Vecino* Se requiere inialmente que la Unidad Residencial se registre en la plataforma, al igual que el administrador de la Unidad o Conjunto Residencial. 
 
-![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/97859994-6c73-4ad4-aa70-3d15304bf789)
+![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/97859994-6c73-4ad4-aa70-3d15304bf789)<br>
 Formulario de Registro de Unidad Residencial y Administrador de la Unidad.
 
 
