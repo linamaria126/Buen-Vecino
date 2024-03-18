@@ -1,3 +1,17 @@
+
+![image](https://github.com/linamaria126/Buen-Vecino/assets/66230572/f3e3ef76-52c5-410e-b285-28d341256279)
+
+
+
+
+
+
+
+
+
+
+
+
 # WebApp boilerplate with React JS and Flask API
 
 Build web applications using React.js for the front end and python/flask for your backend API.
