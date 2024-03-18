@@ -65,10 +65,10 @@ https://buen-vecino.onrender.com/
 
 Buen Vecino se llevó a cabo por parte del siguiente equipo de desarrollo:
 
-Jessica Valbuena - FullStack Development -  Perfil de GitHub: https://github.com/jvalbuena0317
-Juan Carlos Lopez - FullStack Development - Perfil de GitHub: https://github.com/Intetsu0396
-Rogelio Granadino - FullStack Development - Perfil de GitHub: https://github.com/antoniogranadino
-Lina María Cardona - FullStack Development - Perfil de GitHub: https://github.com/linamaria126
+- Jessica Valbuena - FullStack Development -  Perfil de GitHub: https://github.com/jvalbuena0317<br>
+- Juan Carlos Lopez - FullStack Development - Perfil de GitHub: https://github.com/Intetsu0396<br>
+- Rogelio Granadino - FullStack Development - Perfil de GitHub: https://github.com/antoniogranadino<br>
+- Lina María Cardona - FullStack Development - Perfil de GitHub: https://github.com/linamaria126<br>
 
 
 ### 6. Personas contribuyéntes: 
