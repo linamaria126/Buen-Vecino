@@ -22,7 +22,7 @@
 
 ### Descripción del Proyecto:
 
-*Buen Vecino* Es una aplicación creada para ser empleada por las Unidades Residenciales. Permite que los Residentes que forman parte de una Unidad Residencial se conecten entre sí para la compra y venta de Servicios, dentro de su misma Unidad Residencial o Condominio, generando con esto una *Comunidad Colaborativa*, y una mejora de la economía de los integrantes de la Comunidad. Lo cual no solo favorecería a los miembros de la Unidad  sinó también a la Unidad residencial como tal, puesto que al contribuír de modo positivo en la economía de los hogares permitirá un mejor flujo y  facilitará  el cumplimiento de las responsabilidades como el pago de la cuota de la Admnistración. 
+**Buen Vecino** Es una aplicación creada para ser empleada por las Unidades Residenciales. Permite que los Residentes que forman parte de una Unidad Residencial se conecten entre sí para la compra y venta de Servicios, dentro de su misma Unidad Residencial o Condominio, generando con esto una *Comunidad Colaborativa*, y una mejora de la economía de los integrantes de la Comunidad. Lo cual no solo favorecería a los miembros de la Unidad  sinó también a la Unidad residencial como tal, puesto que al contribuír de modo positivo en la economía de los hogares permitirá un mejor flujo y  facilitará  el cumplimiento de las responsabilidades como el pago de la cuota de la Admnistración. 
 
 Para ser parte de *Buen Vecino* Se requiere inialmente que la Unidad Residencial se registre en la plataforma, al igual que el administrador de la Unidad o Conjunto Residencial. 
 
